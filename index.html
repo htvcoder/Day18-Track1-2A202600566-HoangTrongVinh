@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 18 - AI Capstone Supervision Platform</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Day 18 - Human-Centered AI Design</p>
+        <h1>AI Capstone<br>Supervision Platform</h1>
+        <p class="brand-note">Prototype cho lát cắt: AI hỗ trợ lập kế hoạch đồ án theo 2 bước.</p>
+      </div>
+
+      <nav class="menu">
+        <button class="nav-link active" data-target="flow-map">00 - Flow map & phạm vi</button>
+        <button class="nav-link" data-target="onboarding">01 - Onboarding</button>
+        <button class="nav-link" data-target="step-one">02 - Bước 1: Lập đề cương</button>
+        <button class="nav-link" data-target="step-two">03 - Bước 2: Kế hoạch chính thức</button>
+        <button class="nav-link" data-target="agency">04 - Agency</button>
+        <button class="nav-link" data-target="failure">05 - Failure & Recovery</button>
+        <button class="nav-link" data-target="feedback">06 - Feedback loop 2x2</button>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Prototype tương tác bằng HTML/CSS/JavaScript</p>
+          <h2>AI hỗ trợ quản lý và hướng dẫn đồ án</h2>
+          <p class="hero-copy">
+            Prototype này thể hiện rõ AI biết gì, chưa biết gì, được phép tự làm tới đâu,
+            và người dùng kiểm tra, sửa, từ chối hoặc hoàn tác như thế nào trong flow lập kế hoạch đồ án.
+          </p>
+        </div>
+        <div class="hero-badges">
+          <span class="badge safe">Đề tài: Đang thực hiện</span>
+          <span class="badge warning">Đề cương: Đang soạn / Đã duyệt</span>
+          <span class="badge neutral">Kế hoạch: Bản nháp / Chờ duyệt</span>
+        </div>
+      </header>
+
+      <section id="flow-map" class="page-section active">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">00</p>
+            <h3>Flow map & phạm vi</h3>
+          </div>
+          <button class="ghost-button" data-next="onboarding">Bắt đầu demo</button>
+        </div>
+
+        <div class="flow-grid">
+          <article class="flow-card">
+            <span class="flow-step">01</span>
+            <h4>Onboarding</h4>
+            <p>Thiết lập kỳ vọng về AI lập kế hoạch theo 2 bước và quyền kiểm soát của Giảng viên.</p>
+          </article>
+          <article class="flow-card">
+            <span class="flow-step">02</span>
+            <h4>Chọn bối cảnh đề tài</h4>
+            <p>Đề tài: AI hỗ trợ quản lý và hướng dẫn đồ án. Hệ thống đọc trạng thái đề tài, đề cương, năng lực sinh viên.</p>
+          </article>
+          <article class="flow-card">
+            <span class="flow-step">03</span>
+            <h4>AI kiểm tra trạng thái đề cương</h4>
+            <p>Nếu chưa duyệt, AI dừng ở kế hoạch lập đề cương. Nếu đã duyệt, AI mới mở đường cho kế hoạch chính thức.</p>
+          </article>
+          <article class="flow-card">
+            <span class="flow-step">04</span>
+            <h4>Review căn cứ & giả định</h4>
+            <p>Người dùng xem dữ liệu AI dùng, giả định, điểm chưa chắc chắn, mức rủi ro và khả năng hoàn tác.</p>
+          </article>
+          <article class="flow-card">
+            <span class="flow-step">05</span>
+            <h4>Duyệt / sửa / từ chối / undo</h4>
+            <p>Kế hoạch chỉ được lưu dưới dạng bản nháp hoặc chờ duyệt, không tự công bố cho sinh viên.</p>
+          </article>
+          <article class="flow-card">
+            <span class="flow-step">06</span>
+            <h4>Feedback & recovery</h4>
+            <p>Khi AI sai trạng thái hoặc sai giả định năng lực, người dùng sửa dữ liệu và tiếp tục mục tiêu.</p>
+          </article>
+        </div>
+
+        <div class="two-column">
+          <article class="info-card">
+            <h4>Trong phạm vi prototype</h4>
+            <ul>
+              <li>AI lập kế hoạch tuần đầu để hoàn thiện đề cương.</li>
+              <li>AI tạo kế hoạch hướng dẫn chính thức sau khi đề cương được duyệt.</li>
+              <li>Hiển thị căn cứ, giả định, điểm chưa chắc chắn và đường khôi phục.</li>
+              <li>Giảng viên giữ quyền sửa, duyệt, từ chối, hoàn tác và phản hồi lỗi.</li>
+            </ul>
+          </article>
+          <article class="info-card muted">
+            <h4>Ngoài phạm vi prototype</h4>
+            <ul>
+              <li>Không xây toàn bộ hệ thống quản lý đồ án.</li>
+              <li>Không tích hợp AI thật hoặc backend.</li>
+              <li>Không tự động duyệt đề cương, đổi deadline hay gửi quyết định chính thức.</li>
+              <li>Không thay Giảng viên ra quyết định học thuật.</li>
+            </ul>
+          </article>
+        </div>
+
+        <aside class="rationale-box">
+          <h4>Design rationale</h4>
+          <p><strong>AI đang biết:</strong> quy trình chuẩn trong SRS là 2 bước, vai trò quyết định là Giảng viên, đề cương là căn cứ trung tâm.</p>
+          <p><strong>AI chưa biết:</strong> trạng thái đề cương thật tại thời điểm chạy, năng lực sinh viên đủ chi tiết, các mốc bận ngoài hệ thống.</p>
+          <p><strong>Điều có thể sai:</strong> AI suy diễn nhầm rằng có thể tạo kế hoạch chính thức quá sớm.</p>
+          <p><strong>Quyết định thiết kế:</strong> mở đầu bằng flow map và phạm vi để chặn hiểu nhầm ngay từ đầu, trước khi đi vào từng nhánh.</p>
+        </aside>
+      </section>
+
+      <section id="onboarding" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01</p>
+            <h3>Onboarding</h3>
+          </div>
+          <button class="ghost-button" data-next="step-one">Đi tới Bước 1</button>
+        </div>
+
+        <div class="card-grid onboarding-grid">
+          <article class="feature-card">
+            <span class="badge safe">Card 1</span>
+            <h4>AI lập kế hoạch đồ án theo 2 bước</h4>
+            <p>Khi đề cương chưa được chốt, AI chỉ giúp lập kế hoạch hoàn thiện đề cương. Sau khi đề cương được duyệt, AI mới tạo kế hoạch thực hiện đồ án đầy đủ.</p>
+            <ul>
+              <li>Gợi ý kế hoạch lập đề cương tuần đầu.</li>
+              <li>Chỉ ra phần còn thiếu trong đề cương.</li>
+              <li>Tạo kế hoạch chính thức sau khi đề cương đã duyệt.</li>
+              <li>Cảnh báo tuần quá tải và điều chỉnh theo năng lực sinh viên.</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <span class="badge risk">Card 2</span>
+            <h4>AI không được tự làm gì?</h4>
+            <ul>
+              <li>Không phê duyệt đề cương hoặc chốt phạm vi đề tài.</li>
+              <li>Không thay đổi deadline chính thức.</li>
+              <li>Không công bố kế hoạch chính thức cho sinh viên.</li>
+              <li>Không đóng, hủy đề tài hoặc thay Giảng viên ra quyết định học thuật.</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <span class="badge warning">Card 3</span>
+            <h4>AI cần dữ liệu gì?</h4>
+            <ul>
+              <li>Tên đề tài và nhiệm vụ ban đầu.</li>
+              <li>Trạng thái đề tài và trạng thái đề cương.</li>
+              <li>Loại đồ án, thời lượng thực hiện, mốc bắt buộc.</li>
+              <li>Năng lực sinh viên và nội dung đề cương đã duyệt nếu có.</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <span class="badge neutral">Card 4</span>
+            <h4>Quyền kiểm soát của người dùng</h4>
+            <ul>
+              <li>Xem AI dùng dữ liệu nào và không dùng dữ liệu nào.</li>
+              <li>Sửa giả định, từ chối đề xuất hoặc hoàn tác.</li>
+              <li>Không cho AI dùng một số tín hiệu hành vi để cá nhân hóa.</li>
+              <li>Quyết định lưu bản nháp hay duyệt kế hoạch chính thức.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="panel-row">
+          <article class="context-panel">
+            <h4>AI biết gì?</h4>
+            <ul>
+              <li>Người dùng lần đầu vào tính năng AI lập kế hoạch.</li>
+              <li>Quy trình đúng là 2 bước, không được nhảy cóc.</li>
+            </ul>
+          </article>
+          <article class="context-panel">
+            <h4>AI chưa biết gì?</h4>
+            <ul>
+              <li>Đề tài cụ thể đang ở trạng thái đề cương nào.</li>
+              <li>Năng lực, lịch bận và ràng buộc cá nhân của sinh viên.</li>
+            </ul>
+          </article>
+          <article class="context-panel">
+            <h4>Người dùng kiểm soát ở đâu?</h4>
+            <ul>
+              <li>Nút sửa giả định và phản hồi lỗi trong mọi flow chính.</li>
+              <li>Tùy chọn tắt dùng tín hiệu hành vi ngầm định.</li>
+            </ul>
+          </article>
+        </div>
+
+        <aside class="rationale-box">
+          <h4>Design rationale</h4>
+          <p><strong>Rủi ro:</strong> nếu onboarding không nhấn mạnh giới hạn, người dùng có thể tưởng AI tạo kế hoạch toàn bộ ngay từ đầu.</p>
+          <p><strong>Agency:</strong> ở đây AI chỉ <strong>Ask</strong> người dùng bắt đầu từ dữ liệu tối thiểu, không ép nhập form dài.</p>
+          <p><strong>Feedback:</strong> system → user explicit qua nội dung card; system → user implicit qua thứ tự card và badge cảnh báo.</p>
+        </aside>
+      </section>
+
+      <section id="step-one" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02</p>
+            <h3>Bước 1: Đề cương chưa chốt, AI chỉ lập kế hoạch làm đề cương</h3>
+          </div>
+          <button class="ghost-button" data-next="step-two">Sang Bước 2</button>
+        </div>
+
+        <div class="scenario-layout">
+          <article class="workbench">
+            <div class="status-strip">
+              <span class="badge neutral">Đề tài: Đang soạn</span>
+              <span class="badge warning">Đề cương: Đang soạn</span>
+              <span class="badge neutral">Loại đồ án: Khảo sát/thực nghiệm</span>
+              <span class="badge warning">Năng lực sinh viên: Chưa rõ</span>
+            </div>
+
+            <div class="project-card">
+              <h4>Đề tài đang chọn</h4>
+              <p class="project-title">AI hỗ trợ quản lý và hướng dẫn đồ án</p>
+              <p class="project-subtitle">Giảng viên đang chuẩn bị đề tài và cần một kế hoạch tuần đầu để hoàn thiện đề cương đủ điều kiện chốt.</p>
+            </div>
+
+            <div id="step1-loading" class="loading-box hidden">
+              <div class="loading-dot"></div>
+              <div>
+                <p>AI đang kiểm tra trạng thái đề cương...</p>
+                <p class="subtle" id="step1-loading-text">Đang đọc trạng thái hiện tại trong hồ sơ đề tài.</p>
+              </div>
+            </div>
+
+            <div id="step1-result" class="result-card hidden">
+              <div class="assistant-note">
+                <span class="badge warning">ASK</span>
+                <p>
+                  Đề cương của đề tài này chưa được chốt. Tôi chưa nên tạo kế hoạch thực hiện toàn bộ đồ án vì phạm vi,
+                  mục tiêu và sản phẩm đầu ra có thể còn thay đổi. Tôi có thể giúp thầy/cô tạo kế hoạch tuần đầu để hoàn thiện đề cương trước.
+                </p>
+              </div>
+
+              <div class="ai-status-list">
+                <div>AI đang kiểm tra trạng thái đề cương...</div>
+                <div>AI phát hiện đề cương chưa chốt.</div>
+                <div>AI chỉ tạo kế hoạch lập đề cương tuần đầu.</div>
+              </div>
+
+              <div class="timeline-card">
+                <h4>Kế hoạch lập đề cương tuần đầu</h4>
+                <div class="timeline-item">
+                  <strong>Mục tiêu tuần đầu</strong>
+                  <p>Hoàn thành đề cương đủ rõ để chốt phạm vi, nhiệm vụ, phương pháp và cấu trúc báo cáo.</p>
+                </div>
+                <div class="timeline-item">
+                  <strong>Việc cần làm</strong>
+                  <p>Làm rõ đề tài, mục tiêu, phạm vi chức năng, phương pháp, bố cục dự kiến và tài liệu tham khảo ban đầu.</p>
+                </div>
+                <div class="timeline-item">
+                  <strong>Mốc nộp 1</strong>
+                  <p>Cuối tuần: nộp đề cương bản nháp + danh sách tài liệu tham khảo ban đầu.</p>
+                </div>
+                <div class="timeline-item">
+                  <strong>Mốc nộp 2</strong>
+                  <p>Sau góp ý: nộp lại bản đã chỉnh sửa để Giảng viên xem xét chốt.</p>
+                </div>
+                <div class="timeline-item">
+                  <strong>Checklist</strong>
+                  <p>Mục tiêu, phạm vi, phương pháp, sản phẩm đầu ra, cấu trúc báo cáo và tiêu chí chốt đã đủ rõ.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button class="primary-button" id="btn-step1-plan">Tạo kế hoạch làm đề cương</button>
+              <button class="secondary-button">Bổ sung thông tin đề cương</button>
+              <button class="ghost-button">Hủy</button>
+            </div>
+          </article>
+
+          <aside class="side-stack">
+            <article class="context-panel">
+              <h4>AI biết gì?</h4>
+              <ul>
+                <li>Đề tài đã có tên và loại đồ án.</li>
+                <li>Đề cương đang ở trạng thái Đang soạn.</li>
+              </ul>
+            </article>
+            <article class="context-panel">
+              <h4>AI chưa biết gì?</h4>
+              <ul>
+                <li>Nội dung đề cương đã đủ sâu hay chưa.</li>
+                <li>Năng lực sinh viên chi tiết và lịch kiểm tra các môn khác.</li>
+              </ul>
+            </article>
+            <article class="context-panel">
+              <h4>Điểm có thể sai</h4>
+              <ul>
+                <li>AI suy luận quá sớm rằng phạm vi đã ổn định.</li>
+                <li>AI đoán năng lực sinh viên khi chưa có đánh giá đầu vào.</li>
+              </ul>
+            </article>
+            <article class="rationale-box compact">
+              <h4>Design rationale</h4>
+              <p><strong>Agency:</strong> <span class="badge warning inline-badge">ASK</span> vì dữ liệu chưa đủ và nếu lập kế hoạch toàn bộ quá sớm thì sai hướng sẽ tốn chi phí sửa lớn.</p>
+              <p><strong>Recovery:</strong> flow cho phép quay về bổ sung đề cương thay vì bế tắc sau khi bị chặn.</p>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="step-two" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03</p>
+            <h3>Bước 2: Sau khi đề cương được chốt, AI tạo kế hoạch thực hiện đồ án</h3>
+          </div>
+          <button class="ghost-button" data-next="agency">Đi tới Agency</button>
+        </div>
+
+        <div class="scenario-layout">
+          <article class="workbench">
+            <div class="status-strip">
+              <span class="badge safe">Đề tài: Đang thực hiện</span>
+              <span class="badge safe">Đề cương: Đã duyệt</span>
+              <span class="badge neutral">Thời lượng: 8 tuần</span>
+              <span class="badge safe">Năng lực sinh viên: Khá</span>
+            </div>
+
+            <div id="step2-loading" class="loading-box hidden">
+              <div class="loading-dot"></div>
+              <div>
+                <p>AI đang tạo kế hoạch hướng dẫn chính thức...</p>
+                <p class="subtle" id="step2-loading-text">Đang đọc đề cương đã duyệt.</p>
+              </div>
+            </div>
+
+            <div id="step2-result" class="result-card hidden">
+              <div class="timeline-card">
+                <div class="card-headline">
+                  <h4>Kế hoạch thực hiện đồ án - 8 tuần</h4>
+                  <span class="badge neutral">Bản nháp</span>
+                </div>
+                <div class="week-grid">
+                  <div class="week-card"><strong>Tuần 1</strong><p>Rà soát đề cương đã duyệt, chốt phạm vi MVP, lập danh sách chức năng chính.</p></div>
+                  <div class="week-card"><strong>Tuần 2</strong><p>Phân tích yêu cầu chi tiết, hoàn thiện use case chính.</p></div>
+                  <div class="week-card"><strong>Tuần 3</strong><p>Thiết kế dữ liệu, thiết kế luồng xử lý chính.</p></div>
+                  <div class="week-card"><strong>Tuần 4</strong><p>Thiết kế giao diện chính, chốt kiến trúc hệ thống.</p></div>
+                  <div class="week-card overload"><strong>Tuần 5</strong><p>Xây dựng chức năng quản lý đề tài, quản lý đề cương và cảnh báo nguy cơ quá tải.</p></div>
+                  <div class="week-card"><strong>Tuần 6</strong><p>Tích hợp AI hỗ trợ gợi ý kế hoạch, kiểm thử luồng chính.</p></div>
+                  <div class="week-card"><strong>Tuần 7</strong><p>Hoàn thiện báo cáo, sửa lỗi và cải thiện prototype.</p></div>
+                  <div class="week-card"><strong>Tuần 8</strong><p>Chuẩn bị demo, nộp sản phẩm cuối.</p></div>
+                </div>
+              </div>
+
+              <div class="button-row">
+                <button class="secondary-button" id="btn-open-save-draft">Lưu bản nháp</button>
+                <button class="secondary-button">Yêu cầu AI điều chỉnh</button>
+                <button class="ghost-button">Từ chối kế hoạch</button>
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button class="primary-button" id="btn-step2-plan">Tạo kế hoạch thực hiện đồ án</button>
+            </div>
+          </article>
+
+          <aside class="side-stack">
+            <article class="context-panel evidence-panel">
+              <h4>Vì sao AI tạo kế hoạch này?</h4>
+              <p class="panel-label">Căn cứ AI sử dụng</p>
+              <ul>
+                <li>Đề cương đã duyệt.</li>
+                <li>Loại đồ án: Khảo sát/thực nghiệm.</li>
+                <li>Thời lượng: 8 tuần.</li>
+                <li>Năng lực sinh viên: Khá.</li>
+                <li>Mốc nộp cuối: Tuần 8.</li>
+              </ul>
+              <p class="panel-label">Giả định của AI</p>
+              <ul>
+                <li>Sinh viên làm việc đều mỗi tuần.</li>
+                <li>Giảng viên review ít nhất 1 lần/tuần.</li>
+                <li>Không có thay đổi lớn về phạm vi.</li>
+                <li>MVP cần có bản demo ở tuần 8.</li>
+              </ul>
+              <p class="panel-label">Điểm chưa chắc chắn</p>
+              <ul>
+                <li>Chưa có lịch bận cá nhân của sinh viên.</li>
+                <li>Chưa biết tuần nào có kiểm tra môn khác.</li>
+                <li>Chưa có mốc review giữa kỳ cụ thể.</li>
+              </ul>
+              <div class="button-stack">
+                <button class="ghost-button">Sửa giả định</button>
+                <button class="ghost-button">Không dùng dữ liệu này</button>
+                <button class="ghost-button">Xem nguồn</button>
+              </div>
+            </article>
+
+            <article class="rationale-box compact">
+              <h4>Design rationale</h4>
+              <p><strong>AI đang biết:</strong> đề cương đã duyệt, đề tài đang thực hiện, loại đồ án, thời lượng và mức năng lực.</p>
+              <p><strong>Điều có thể sai:</strong> giả định về tải học tập thực tế hoặc năng lực sinh viên.</p>
+              <p><strong>Agency:</strong> tạo kế hoạch được phép <strong>Ask</strong>, còn lưu và công bố vẫn cần xác nhận của Giảng viên.</p>
+            </article>
+          </aside>
+        </div>
+
+        <div id="draft-modal" class="modal hidden" aria-hidden="true">
+          <div class="modal-card">
+            <h4>Xác nhận lưu bản nháp</h4>
+            <p>AI sẽ lưu kế hoạch này dưới dạng bản nháp. Giảng viên vẫn cần phê duyệt trước khi công bố cho sinh viên.</p>
+            <div class="button-row">
+              <button class="primary-button" id="btn-confirm-draft">Xác nhận lưu bản nháp</button>
+              <button class="ghost-button" id="btn-close-draft">Quay lại chỉnh sửa</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="agency" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">04</p>
+            <h3>Agency: Act / Ask / Don't Act</h3>
+          </div>
+          <button class="ghost-button" data-next="failure">Sang Failure & Recovery</button>
+        </div>
+
+        <div class="card-grid agency-grid">
+          <article class="agency-card act-card">
+            <span class="badge safe">ACT</span>
+            <h4>AI được tự hành động</h4>
+            <p>AI tự gắn nhãn “Tuần 5 có nguy cơ quá tải” vì tuần này có nhiều đầu việc và rủi ro thấp, dễ nhìn thấy, dễ bỏ nhãn.</p>
+            <div class="button-row">
+              <button class="secondary-button" id="btn-toggle-warning">Bỏ cảnh báo</button>
+              <button class="ghost-button">Xem lý do</button>
+            </div>
+            <p id="act-feedback" class="subtle">Cảnh báo hiện đang bật để nhấn mạnh tuần có nguy cơ quá tải.</p>
+          </article>
+
+          <article class="agency-card ask-card">
+            <span class="badge warning">ASK</span>
+            <h4>AI phải hỏi trước</h4>
+            <p>AI muốn áp dụng kế hoạch đã điều chỉnh vào bản nháp. Đây là thay đổi có tác động tới workflow của Giảng viên nên cần xác nhận.</p>
+            <div class="button-row">
+              <button class="secondary-button" id="btn-ask-preview">Xem trước</button>
+              <button class="primary-button">Áp dụng</button>
+              <button class="ghost-button">Không áp dụng</button>
+            </div>
+            <div id="ask-preview" class="inline-preview hidden">
+              <p>Preview: Giảm tải Tuần 5, dời tích hợp AI sang Tuần 6 và thêm một checkpoint review giữa kỳ.</p>
+            </div>
+          </article>
+
+          <article class="agency-card dont-card">
+            <span class="badge risk">DON'T ACT</span>
+            <h4>AI không được hành động</h4>
+            <p>Người dùng yêu cầu tạo luôn kế hoạch thực hiện chính thức dù đề cương chưa duyệt.</p>
+            <blockquote>
+              Tôi không thể tạo hoặc công bố kế hoạch thực hiện chính thức khi đề cương chưa được duyệt. Tôi có thể tạo kế hoạch lập đề cương hoặc một bản nháp tham khảo không lưu chính thức.
+            </blockquote>
+            <ul>
+              <li>Rủi ro cao và khó hoàn tác nếu sinh viên làm sai hướng.</li>
+              <li>Thiếu dữ liệu đáng tin cậy về phạm vi và mục tiêu đã chốt.</li>
+              <li>Quyền phê duyệt thuộc về Giảng viên.</li>
+            </ul>
+            <div class="button-row">
+              <button class="secondary-button">Tạo kế hoạch làm đề cương</button>
+              <button class="secondary-button">Tạo bản nháp sơ bộ</button>
+              <button class="ghost-button">Cập nhật trạng thái đề cương</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="failure" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">05</p>
+            <h3>Failure & Recovery</h3>
+          </div>
+          <button class="ghost-button" data-next="feedback">Sang Feedback 2x2</button>
+        </div>
+
+        <div class="tab-row">
+          <button class="tab-button active" data-failure="status">Kịch bản 1: Sai trạng thái đề cương</button>
+          <button class="tab-button" data-failure="capacity">Kịch bản 2: Kế hoạch quá nặng</button>
+        </div>
+
+        <div id="failure-status" class="failure-panel active">
+          <div class="scenario-layout">
+            <article class="workbench">
+              <div class="alert-box risk-box">
+                <h4>Kế hoạch này chưa phù hợp vì đề cương chưa được duyệt.</h4>
+                <p>Giảng viên phát hiện AI đã hiểu nhầm trạng thái đề cương và tạo kế hoạch 8 tuần quá sớm.</p>
+              </div>
+              <div class="button-row">
+                <button class="secondary-button issue-button active">Sai trạng thái đề cương</button>
+                <button class="secondary-button issue-button">Sai phạm vi đề tài</button>
+                <button class="secondary-button issue-button">Kế hoạch quá sớm</button>
+                <button class="ghost-button issue-button">Khác</button>
+              </div>
+              <div class="form-card">
+                <label for="correct-status">Trạng thái đúng</label>
+                <select id="correct-status">
+                  <option>Đang soạn</option>
+                  <option selected>Đang chỉnh sửa theo góp ý</option>
+                  <option>Đã duyệt</option>
+                </select>
+                <button class="primary-button" id="btn-recover-status">Xác nhận sửa trạng thái</button>
+              </div>
+              <div id="status-recovery-result" class="recovery-result hidden">
+                <p>
+                  Cảm ơn thầy/cô. Tôi đã hiểu lỗi là: tôi đánh giá sai trạng thái đề cương.
+                  Tôi sẽ không dùng kế hoạch 8 tuần này làm kế hoạch chính thức. Tôi sẽ chuyển nó về bản nháp tham khảo
+                  và tạo lại kế hoạch hoàn thiện đề cương theo góp ý.
+                </p>
+                <div class="button-row">
+                  <button class="secondary-button">Tạo lại kế hoạch đề cương</button>
+                  <button class="secondary-button">Giữ bản nháp tham khảo</button>
+                  <button class="ghost-button">Hoàn tác</button>
+                </div>
+              </div>
+            </article>
+            <aside class="rationale-box compact">
+              <h4>Design rationale</h4>
+              <p><strong>Điểm sai:</strong> AI tự tin vào dữ liệu trạng thái chưa đủ chắc.</p>
+              <p><strong>Hậu quả:</strong> sinh viên có thể bám nhầm kế hoạch chính thức khi căn cứ chưa hợp lệ.</p>
+              <p><strong>Recovery:</strong> người dùng không chỉ báo lỗi mà còn sửa dữ liệu, hạ cấp output và đi tiếp sang kế hoạch phù hợp hơn.</p>
+            </aside>
+          </div>
+        </div>
+
+        <div id="failure-capacity" class="failure-panel">
+          <div class="scenario-layout">
+            <article class="workbench">
+              <div class="form-card">
+                <h4>Bạn muốn sửa vấn đề gì?</h4>
+                <div class="choice-grid">
+                  <label><input type="radio" name="overload" checked> Kế hoạch quá dày</label>
+                  <label><input type="radio" name="overload"> Sai năng lực sinh viên</label>
+                  <label><input type="radio" name="overload"> Sai phạm vi đề tài</label>
+                  <label><input type="radio" name="overload"> Thiếu mốc kiểm tra</label>
+                </div>
+                <div class="adjustment-row">
+                  <span>Giả định cũ: <strong>Khá</strong></span>
+                  <span>Điều chỉnh mới: <strong>Yếu</strong></span>
+                </div>
+                <button class="primary-button" id="btn-recover-capacity">Tạo lại kế hoạch nhẹ hơn</button>
+              </div>
+              <div id="capacity-recovery-result" class="recovery-result hidden">
+                <p>
+                  Tôi đã hiểu kế hoạch hiện tại quá nặng vì AI giả định năng lực sinh viên là Khá.
+                  Tôi sẽ tạo lại kế hoạch với ít đầu việc hơn mỗi tuần, thêm thời gian ôn tập và chia nhỏ nhiệm vụ lớn.
+                </p>
+                <div class="compare-table">
+                  <div class="compare-column">
+                    <h5>Trước</h5>
+                    <p><strong>Tuần 5:</strong> Xây dựng 4 chức năng, tích hợp AI, viết báo cáo kỹ thuật.</p>
+                  </div>
+                  <div class="compare-column">
+                    <h5>Sau</h5>
+                    <p><strong>Tuần 5:</strong> Xây dựng 2 chức năng chính.</p>
+                    <p><strong>Tuần 6:</strong> Tích hợp AI, kiểm thử từng phần.</p>
+                  </div>
+                </div>
+                <div class="button-row">
+                  <button class="primary-button">Áp dụng kế hoạch mới</button>
+                  <button class="secondary-button">So sánh chi tiết</button>
+                  <button class="ghost-button">Hoàn tác</button>
+                  <button class="ghost-button">Giữ kế hoạch cũ</button>
+                </div>
+              </div>
+            </article>
+            <aside class="rationale-box compact">
+              <h4>Design rationale</h4>
+              <p><strong>AI sai ở đâu:</strong> giả định năng lực sinh viên cao hơn thực tế.</p>
+              <p><strong>Vì sao dễ phát hiện:</strong> panel giả định đặt cạnh kế hoạch giúp Giảng viên nhìn ra nguyên nhân.</p>
+              <p><strong>Feedback:</strong> explicit user feedback qua chọn lý do cụ thể; implicit signal có thể là việc người dùng dừng lâu ở phần giả định trước khi bấm lưu.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="feedback" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">06</p>
+            <h3>Feedback loop 2x2</h3>
+          </div>
+          <button class="ghost-button" data-next="flow-map">Quay lại đầu</button>
+        </div>
+
+        <div class="matrix">
+          <div class="matrix-header"></div>
+          <div class="matrix-header">Explicit - Tường minh</div>
+          <div class="matrix-header">Implicit - Ngầm định</div>
+
+          <div class="matrix-side">User → System</div>
+          <article class="matrix-cell">
+            <h4>Giảng viên báo lỗi và chọn lý do</h4>
+            <p>Ví dụ: bấm <strong>Sai trạng thái đề cương</strong> hoặc <strong>Kế hoạch quá tải</strong>, sau đó chọn nguyên nhân cụ thể.</p>
+            <p class="subtle">Tác dụng: giúp hệ thống sửa đúng lỗi hiện tại và ghi nhớ rằng output này không đáng tin để dùng chính thức.</p>
+          </article>
+          <article class="matrix-cell">
+            <h4>Tín hiệu hành vi tham khảo</h4>
+            <p>Ví dụ: người dùng hoàn tác kế hoạch vừa áp dụng hoặc dừng lâu ở panel <strong>Giả định của AI</strong>.</p>
+            <p class="subtle">Tác dụng: hệ thống chỉ dùng để gợi ý nhẹ như “Thầy/cô có muốn kiểm tra lại giả định không?”, không xem đó là sự thật tuyệt đối.</p>
+          </article>
+
+          <div class="matrix-side">System → User</div>
+          <article class="matrix-cell">
+            <h4>AI nói rõ trạng thái và giới hạn</h4>
+            <p>Ví dụ: “Đề cương chưa chốt, tôi chỉ tạo kế hoạch lập đề cương.” hoặc “Kế hoạch này chỉ là bản nháp, chưa được Giảng viên duyệt.”</p>
+            <p class="subtle">Tác dụng: giảm hiểu nhầm giữa đề xuất AI và quyết định chính thức.</p>
+          </article>
+          <article class="matrix-cell">
+            <h4>Cue giao diện dẫn người dùng đi an toàn</h4>
+            <p>Nút tạo kế hoạch chính thức chỉ bật khi đề cương đã duyệt; badge <strong>Bản nháp</strong> và panel căn cứ luôn đặt cạnh output.</p>
+            <p class="subtle">Tác dụng: hướng người dùng tới hành động an toàn mà không làm flow bị ngắt quãng bởi quá nhiều cảnh báo.</p>
+          </article>
+        </div>
+
+        <aside class="rationale-box">
+          <h4>Rationale cho feedback</h4>
+          <p><strong>Thời điểm:</strong> feedback xuất hiện ở các điểm dừng tự nhiên như sau khi AI tạo kế hoạch, khi người dùng review và khi phát hiện sai sót.</p>
+          <p><strong>Minh bạch:</strong> prototype nêu rõ tín hiệu nào chỉ dùng để hỗ trợ cá nhân hóa nhẹ, người dùng có thể tắt dùng tín hiệu hành vi.</p>
+          <p><strong>Phản ứng ngay:</strong> với explicit feedback, hệ thống xác nhận hiểu lỗi và đề xuất đường phục hồi; với implicit feedback, hệ thống chỉ gợi ý chứ không tự sửa mạnh.</p>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

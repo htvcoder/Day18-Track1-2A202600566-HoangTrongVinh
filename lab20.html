@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 20 - Retention, Engagement & Habit Loop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell lab20-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Day 20</p>
+        <h1>Retention,<br>Engagement &<br>Habit Loop</h1>
+        <p class="brand-note">Tiếp tục lát cắt AI hỗ trợ lập kế hoạch đồ án theo 2 bước.</p>
+      </div>
+      <div class="lab-switcher" aria-label="Điều hướng giữa các trang">
+        <a href="index.html">← Trang đầu</a>
+        <a href="lab18.html">Mở Lab 18 →</a>
+      </div>
+      <nav class="menu compact-menu" aria-label="Nội dung Lab 20">
+        <button class="nav-link active" data-target="current-state">00 — Current State từ Day 18</button>
+        <button class="nav-link" data-target="retention-canvas">01 — Customer Retention Canvas</button>
+        <button class="nav-link" data-target="core-action">02 — Core Action & Active User</button>
+        <button class="nav-link" data-target="retention-metric">03 — Natural Frequency & Retention</button>
+        <button class="nav-link" data-target="onboarding-audit">04 — Onboarding Audit</button>
+        <button class="nav-link" data-target="redesigned-onboarding">05 — Redesigned Onboarding</button>
+        <button class="nav-link" data-target="before-after">06 — Before / After & Recovery</button>
+        <button class="nav-link" data-target="measurement-ladder">07 — Measurement Ladder</button>
+        <button class="nav-link" data-target="north-star">08 — North Star & Input Metrics</button>
+        <button class="nav-link" data-target="nature-nurture">09 — Nature vs Nurture</button>
+        <button class="nav-link" data-target="hook-review">10 — Hook Review</button>
+        <button class="nav-link" data-target="tracking">11 — Metric Tracking Requirement</button>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Day 20 · Retention, Engagement & Habit Loop</p>
+          <h2>Từ first value tới nhịp sử dụng hàng tuần</h2>
+          <p class="hero-copy">Một use case, một persona và một chuỗi logic xuyên suốt: nhu cầu tự nhiên → core action → active user → retention → onboarding → habit phù hợp → tracking có thể kiểm chứng.</p>
+        </div>
+        <div class="hero-badges">
+          <span class="badge safe">Persona: Giảng viên</span>
+          <span class="badge warning">Cadence: Weekly theo giai đoạn</span>
+          <span class="badge neutral">Core event: plan_draft_saved</span>
+        </div>
+      </header>
+
+      <section id="current-state" class="page-section active">
+        <div class="section-heading"><div><p class="eyebrow">00</p><h3>Current State từ Day 18</h3></div><button class="ghost-button" data-next="retention-canvas">Bắt đầu phân tích</button></div>
+        <div class="two-column">
+          <article class="info-card">
+            <dl class="definition-list">
+              <div><dt>Sản phẩm</dt><dd>AI Capstone Supervision Platform</dd></div>
+              <div><dt>Lát cắt</dt><dd>AI hỗ trợ lập kế hoạch đồ án theo 2 bước</dd></div>
+              <div><dt>Persona Day 20</dt><dd>Giảng viên hướng dẫn đồ án</dd></div>
+            </dl>
+            <a class="primary-button button-link" href="lab18.html">Mở prototype Day 18</a>
+          </article>
+          <article class="info-card muted">
+            <h4>Day 18 đã giải quyết</h4>
+            <ul>
+              <li>AI biết/chưa biết gì và có thể sai ở đâu.</li>
+              <li>Lập kế hoạch theo 2 bước đúng trạng thái đề cương.</li>
+              <li>Act / Ask / Don’t Act và explainability.</li>
+              <li>Failure & Recovery và feedback loop 2×2.</li>
+            </ul>
+          </article>
+        </div>
+        <aside class="rationale-box"><h4>Ràng buộc nghiệp vụ tiếp tục được giữ</h4><p>AI chỉ tạo đề xuất hoặc bản nháp. Đề cương phải ở trạng thái <strong>Đã duyệt</strong> trước khi tạo kế hoạch hướng dẫn chính thức; giảng viên là người sửa, duyệt và quyết định cuối cùng.</p></aside>
+      </section>
+
+      <section id="retention-canvas" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">01</p><h3>Customer Retention Canvas — Use Case</h3></div><button class="ghost-button" data-next="core-action">Tiếp: Core Action</button></div>
+        <p class="section-intro">Chỉ phân tích một use case chính: giảng viên dùng AI để tạo hoặc cập nhật kế hoạch hướng dẫn đồ án.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Thành phần</th><th>Câu trả lời</th></tr></thead>
+          <tbody>
+            <tr><th>The Problem</th><td>“Tôi mất nhiều thời gian để lập kế hoạch hướng dẫn đồ án cho từng nhóm sinh viên, đặc biệt khi đề cương chưa rõ hoặc năng lực sinh viên khác nhau.”</td></tr>
+            <tr><th>The Persona</th><td>Giảng viên hướng dẫn đồ án, đang phụ trách nhiều nhóm sinh viên, cần lập kế hoạch theo tuần và theo dõi tiến độ.</td></tr>
+            <tr><th>Anti-persona</th><td>Admin kỹ thuật không tham gia nghiệp vụ hướng dẫn; giảng viên chỉ hướng dẫn rất ít và không cần kế hoạch theo tuần; sinh viên tự làm đề tài không có quy trình duyệt đề cương.</td></tr>
+            <tr><th>The Why</th><td>Giảm thời gian lập kế hoạch thủ công, bảo đảm kế hoạch phù hợp trạng thái đề cương và năng lực sinh viên, tránh giao việc quá sớm hoặc sai hướng.</td></tr>
+            <tr><th>The Alternative</th><td>Lập kế hoạch bằng Word/Excel, dùng mẫu cũ, nhắn qua Zalo/email, ghi chú thủ công, tự nhớ deadline hoặc trao đổi trực tiếp.</td></tr>
+            <tr><th>The Frequency</th><td>Theo chu kỳ đồ án/học kỳ. Trong giai đoạn hướng dẫn, giảng viên kiểm tra hoặc điều chỉnh kế hoạch hàng tuần; sau khi kết thúc đồ án, nhu cầu giảm mạnh.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="core-action" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">02</p><h3>Core Action & Active User</h3></div><button class="ghost-button" data-next="retention-metric">Tiếp: Retention Metric</button></div>
+        <div class="metric-card-grid">
+          <article class="metric-card"><span>Core job</span><strong>Giảng viên có một kế hoạch hướng dẫn phù hợp với trạng thái đề cương, năng lực sinh viên và thời lượng thực hiện.</strong></article>
+          <article class="metric-card emphasis"><span>Core action</span><strong>Tạo hoặc điều chỉnh và lưu một kế hoạch hướng dẫn đồ án bằng AI dưới dạng bản nháp có thể sử dụng.</strong><code>plan_draft_saved</code></article>
+          <article class="metric-card"><span>Khi nào được tính?</span><strong>Khi giảng viên lưu kế hoạch nháp do AI tạo hoặc điều chỉnh, cho kế hoạch làm đề cương hoặc kế hoạch hướng dẫn chính thức sau khi đề cương đã duyệt.</strong></article>
+          <article class="metric-card"><span>Evidence of value</span><strong>Giảng viên có kế hoạch cụ thể để hướng dẫn sinh viên, thay vì chỉ xem gợi ý hoặc mở màn hình.</strong></article>
+        </div>
+        <div class="active-definition"><p class="eyebrow">Active user definition</p><p>Một giảng viên được tính là <strong>active trong tuần</strong> khi lưu hoặc cập nhật ít nhất một kế hoạch hướng dẫn đồ án bằng AI cho một nhóm sinh viên.</p></div>
+        <div class="exclusion-grid">
+          <span>✕ Mở app</span><span>✕ Xem onboarding</span><span>✕ Bấm tạo nhưng không lưu</span><span class="included">✓ Kế hoạch được lưu hoặc cập nhật</span>
+        </div>
+      </section>
+
+      <section id="retention-metric" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">03</p><h3>Natural Frequency & Retention Metric</h3></div><button class="ghost-button" data-next="onboarding-audit">Tiếp: Audit Onboarding</button></div>
+        <div class="table-wrap"><table>
+          <tbody>
+            <tr><th>Persona và use case</th><td>Giảng viên dùng AI để lập/cập nhật kế hoạch hướng dẫn đồ án.</td></tr>
+            <tr><th>Natural frequency</th><td><strong>Weekly</strong> trong giai đoạn hướng dẫn; theo học kỳ ở mức tạo kế hoạch mới.</td></tr>
+            <tr><th>Core action</th><td><code>plan_draft_saved</code> hoặc <code>plan_updated</code></td></tr>
+            <tr><th>Active user</th><td>Giảng viên có ít nhất một kế hoạch được lưu/cập nhật bằng AI trong tuần.</td></tr>
+            <tr><th>Retention metric</th><td><strong>Weekly Active Lecturer Retention</strong></td></tr>
+            <tr><th>Định nghĩa</th><td>Tỷ lệ giảng viên thực hiện core action trong tuần W và tiếp tục thực hiện core action trong tuần W+1.</td></tr>
+            <tr><th>Công thức</th><td><code>retained_lecturers_week_W+1 / active_lecturers_week_W</code></td></tr>
+          </tbody>
+        </table></div>
+        <aside class="rationale-box"><h4>Vì sao không chọn D1 hoặc DAU?</h4><p>Lập/cập nhật kế hoạch đồ án không tự nhiên xảy ra hằng ngày. Trong giai đoạn đồ án, giảng viên thường review theo tuần; weekly retention phản ánh đúng lần xuất hiện tự nhiên tiếp theo của nhu cầu.</p></aside>
+      </section>
+
+      <section id="onboarding-audit" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">04</p><h3>Onboarding Audit</h3></div><button class="ghost-button" data-next="redesigned-onboarding">Xem flow tối ưu</button></div>
+        <h4>Current-State Journey</h4>
+        <div class="journey-flow compact-journey">
+          <div>Entry point</div><b>→</b><div>Onboarding quy trình 2 bước</div><b>→</b><div>Xem flow map</div><b>→</b><div>Chọn đề tài</div><b>→</b><div>AI kiểm tra đề cương</div><b>→</b><div>Tạo kế hoạch đề cương</div><b>→</b><div>Review kế hoạch</div><b>→</b><div class="core-step">Lưu bản nháp<br><code>First core action</code></div><b>→</b><div>Aha moment</div>
+        </div>
+        <h4>Friction Audit</h4>
+        <div class="audit-legend" aria-label="Chú giải Friction Audit">
+          <span class="audit-label keep">Keep — bắt buộc trước core action</span>
+          <span class="audit-label remove">Remove — không cần và chưa tạo value</span>
+          <span class="audit-label delay">Delay — chuyển sau first value</span>
+          <span class="audit-label simplify">Simplify — giữ nhưng làm ngắn hơn</span>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bước</th><th>Nhãn</th><th>Lý do</th></tr></thead>
+          <tbody>
+            <tr><td>Giới thiệu quy trình 2 bước</td><td><span class="audit-label keep">Keep</span></td><td>Tránh hiểu nhầm AI lập toàn bộ kế hoạch ngay từ đầu.</td></tr>
+            <tr><td>Giải thích dài về AI không được làm gì</td><td><span class="audit-label simplify">Simplify</span></td><td>Giữ bản ngắn; chuyển chi tiết vào tooltip/card phụ.</td></tr>
+            <tr><td>Xem toàn bộ flow map trước khi dùng</td><td><span class="audit-label delay">Delay</span></td><td>Hữu ích cho demo nhưng không cần trước first core action.</td></tr>
+            <tr><td>Chọn đề tài</td><td><span class="audit-label keep">Keep</span></td><td>Cần để AI tạo kế hoạch phù hợp.</td></tr>
+            <tr><td>Nhập quá nhiều thông tin trước khi tạo</td><td><span class="audit-label delay">Delay</span></td><td>Năng lực và deadline chi tiết có thể hỏi sau first value.</td></tr>
+            <tr><td>Panel explainability quá dài trước khi lưu</td><td><span class="audit-label simplify">Simplify</span></td><td>Chỉ hiện căn cứ chính; cho phép mở rộng chi tiết.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="current-stats">
+          <div><strong>6–8</strong><span>bước tới first core action</span></div><div><strong>4–6</strong><span>trường nếu hỏi đầy đủ</span></div><div><strong>0</strong><span>permission</span></div><div><strong>3–5 phút</strong><span>Time to First Core Action</span></div><div><strong>4–6 phút</strong><span>Time to Value</span></div>
+        </div>
+        <p class="estimation-note"><strong>Drop-off có khả năng cao nhất:</strong> onboarding/flow map quá dài trước khi tạo kế hoạch. Các số liệu trên là <strong>ước tính từ prototype, chưa phải dữ liệu tracking thật</strong>.</p>
+      </section>
+
+      <section id="redesigned-onboarding" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">05</p><h3>Redesigned Onboarding → First Core Action</h3></div><button class="ghost-button" data-next="before-after">So sánh Before / After</button></div>
+        <div class="step-card-flow">
+          <article><span>01</span><h4>Value proposition</h4><p>“AI lập kế hoạch đồ án theo 2 bước.”</p></article>
+          <article><span>02</span><h4>Minimum setup</h4><p>Chọn đề tài hoặc dùng đề tài mẫu.</p></article>
+          <article><span>03</span><h4>Kiểm tra trạng thái</h4><p>AI tự kiểm tra trạng thái đề cương.</p></article>
+          <article><span>04</span><h4>CTA theo ngữ cảnh</h4><p>Chưa duyệt → “Tạo kế hoạch làm đề cương”.</p></article>
+          <article><span>05</span><h4>Hành vi thật</h4><p>AI tạo kế hoạch đề cương 1 tuần.</p></article>
+          <article><span>06</span><h4>Review nhanh</h4><p>Căn cứ ngắn + nút sửa.</p></article>
+          <article class="activation-step"><span>07</span><h4>Lưu bản nháp</h4><p><code>plan_draft_saved</code></p><b>First Core Action · Activation</b></article>
+          <article class="value-step"><span>08</span><h4>Aha moment</h4><p>“Tôi vừa có kế hoạch đề cương có thể dùng ngay.”</p></article>
+        </div>
+        <div class="four-up">
+          <article class="info-card"><h4>First Core Action</h4><code>plan_draft_saved</code></article>
+          <article class="info-card"><h4>Activation</h4><p>Lần đầu giảng viên lưu kế hoạch nháp do AI tạo/điều chỉnh.</p></article>
+          <article class="info-card"><h4>Aha moment</h4><p>Thấy ngay kế hoạch dùng được và có thể sửa.</p></article>
+          <article class="info-card"><h4>Evidence of value</h4><p>Kế hoạch đề cương 1 tuần + căn cứ AI sử dụng.</p></article>
+        </div>
+        <div class="impact-strip"><div><span>TTFCA</span><strong>1–2 phút</strong></div><div><span>Time to Value</span><strong>2–3 phút</strong></div><div><span>Activation Rate</span><code>activated_lecturers / onboarding_started_lecturers</code></div></div>
+      </section>
+
+      <section id="before-after" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">06</p><h3>Before / After & Recovery Path</h3></div><button class="ghost-button" data-next="measurement-ladder">Tiếp: Measurement</button></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Tiêu chí</th><th>Before</th><th>After</th><th>Vì sao thay đổi?</th></tr></thead>
+          <tbody>
+            <tr><td>Số bước tới core action</td><td>6–8</td><td>4–5</td><td>Bỏ giải thích dài, delay flow map.</td></tr>
+            <tr><td>Số trường phải nhập</td><td>4–6</td><td>1–2 bắt buộc</td><td>Chỉ giữ đề tài; trạng thái đề cương được hệ thống đọc trước first value.</td></tr>
+            <tr><td>Permission trước core action</td><td>0</td><td>0</td><td>Không cần quyền nhạy cảm để tạo bản nháp.</td></tr>
+            <tr><td>Time to First Core Action</td><td>3–5 phút</td><td>1–2 phút</td><td>Đưa CTA tạo kế hoạch lên sớm.</td></tr>
+            <tr><td>Time to Value</td><td>4–6 phút</td><td>2–3 phút</td><td>Hiện kế hoạch đề cương ngay sau core action.</td></tr>
+            <tr><td>Điểm drop-off chính</td><td>Onboarding/flow map dài</td><td>Chọn đề tài/xác nhận trạng thái</td><td>Giảm giải thích trước khi dùng.</td></tr>
+            <tr><td>Evidence of value</td><td>Kế hoạch + rationale dài</td><td>Kế hoạch ngắn + căn cứ chính</td><td>Hiểu nhanh; chi tiết mở khi cần.</td></tr>
+            <tr><td>Recovery path</td><td>Nằm sâu trong Failure & Recovery</td><td>Ngay tại màn hình review</td><td>Sửa được kết quả đầu tiên mà không rời journey.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="recovery-flow">
+          <p class="eyebrow">Recovery giữ từ Day 18</p>
+          <h4>Kết quả đầu tiên chưa phù hợp vì AI giả định sai năng lực sinh viên</h4>
+          <div class="journey-flow"><div>AI tạo kế hoạch</div><b>→</b><div>Bấm “Kế hoạch quá tải”</div><b>→</b><div>Chọn “Năng lực thấp hơn giả định”</div><b>→</b><div>Sửa Khá → Yếu</div><b>→</b><div>AI xác nhận lỗi</div><b>→</b><div>Tạo kế hoạch nhẹ hơn</div><b>→</b><div class="core-step">Lưu kế hoạch mới</div></div>
+        </div>
+      </section>
+
+      <section id="measurement-ladder" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">07</p><h3>Measurement Ladder</h3></div><button class="ghost-button" data-next="north-star">Tiếp: North Star</button></div>
+        <div class="measurement-flow">
+          <article><span>Visitor</span><strong>Số giảng viên mở tính năng AI Planning</strong></article><b>↓</b>
+          <article><span>Activation</span><strong>Tỷ lệ giảng viên lưu kế hoạch nháp đầu tiên</strong></article><b>↓</b>
+          <article><span>Core Action</span><strong>Số kế hoạch nháp được lưu hoặc điều chỉnh bằng AI</strong></article><b>↓</b>
+          <article><span>Retention</span><strong>Weekly Active Lecturer Retention</strong></article><b>↓</b>
+          <article><span>Engagement</span><strong>Số lần chỉnh sửa kế hoạch / giảng viên / tuần</strong></article><b>↓</b>
+          <article><span>Business / Customer Value</span><strong>Giảm thời gian lập kế hoạch; tăng tỷ lệ nhóm có kế hoạch đúng hạn</strong></article>
+        </div>
+      </section>
+
+      <section id="north-star" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">08</p><h3>North Star & Input Metrics</h3></div><button class="ghost-button" data-next="nature-nurture">Tiếp: Nature vs Nurture</button></div>
+        <article class="north-star-card"><span>North Star Metric</span><h4>Số kế hoạch hướng dẫn đồ án hữu ích được giảng viên lưu bằng AI mỗi tuần</h4><p>Một kế hoạch “hữu ích” khi được lưu, không bị hoàn tác trong 24 giờ và có ít nhất một mốc việc hoặc deadline được giữ lại sau chỉnh sửa.</p></article>
+        <div class="input-metric-grid">
+          <article><span>Input 01 · Leading</span><strong>Activation Rate</strong><p>Tỷ lệ giảng viên lưu kế hoạch nháp đầu tiên.</p></article>
+          <article><span>Input 02 · Leading</span><strong>AI Plan Acceptance Rate</strong><p>Tỷ lệ kế hoạch AI được lưu sau review.</p></article>
+          <article><span>Input 03 · Leading</span><strong>Recovery Success Rate</strong><p>Tỷ lệ flow lỗi được sửa thành kế hoạch dùng được.</p></article>
+        </div>
+        <div class="two-column">
+          <article class="info-card"><h4>Leading indicators</h4><ul><li>Activation Rate</li><li>AI Plan Acceptance Rate</li><li>Recovery Success Rate</li></ul></article>
+          <article class="info-card"><h4>Lagging indicators</h4><ul><li>Tỷ lệ nhóm có kế hoạch đúng hạn.</li><li>Mức hài lòng của giảng viên.</li><li>Thời gian lập kế hoạch trung bình giảm.</li></ul></article>
+        </div>
+        <aside class="tradeoff-box"><h4>Trade-off cần theo dõi</h4><p>AI tạo quá nhanh và quá tự động có thể làm số kế hoạch lưu tăng nhưng chất lượng và niềm tin giảm. Vì vậy phải đọc North Star cùng Acceptance Rate, Undo Rate và Recovery Success Rate.</p></aside>
+      </section>
+
+      <section id="nature-nurture" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">09</p><h3>Nature vs Nurture</h3></div><button class="ghost-button" data-next="hook-review">Tiếp: Hook Review</button></div>
+        <div class="table-wrap"><table>
+          <tbody>
+            <tr><th>Natural frequency</th><td>Weekly trong giai đoạn hướng dẫn đồ án; theo học kỳ ở mức tạo kế hoạch mới.</td></tr>
+            <tr><th>Internal trigger</th><td>Giảng viên chuẩn bị buổi hướng dẫn và nhận ra nhóm chưa có kế hoạch rõ ràng cho tuần tới.</td></tr>
+            <tr><th>External trigger hiện có</th><td>Lịch hướng dẫn, deadline nộp đề cương, thông báo sinh viên nộp/chỉnh đề cương.</td></tr>
+            <tr><th>Nurture phù hợp</th><td>Nhắc nhẹ trước buổi hướng dẫn: “Nhóm A chưa có kế hoạch tuần này. Tạo hoặc cập nhật kế hoạch?”</td></tr>
+            <tr><th>Vì sao không quá dày/thưa?</th><td>Chỉ nhắc theo mốc học thuật hoặc khi đề cương/tiến độ thay đổi; không nhắc hằng ngày.</td></tr>
+            <tr><th>Metric tác động</th><td>Weekly Active Lecturer · Notification-to-Core-Action Rate · Mute/Unsubscribe Rate</td></tr>
+          </tbody>
+        </table></div>
+        <div class="nature-note"><strong>Nurture khuếch đại nhịp thật, không tạo nhu cầu từ số 0.</strong><span>Vì vậy prototype chủ động từ chối “daily habit” giả tạo.</span></div>
+      </section>
+
+      <section id="hook-review" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">10</p><h3>Hook Review — Weekly, không ép Daily</h3></div><button class="ghost-button" data-next="tracking">Tiếp: Tracking</button></div>
+        <blockquote class="hook-statement">“Mỗi khi giảng viên chuẩn bị buổi hướng dẫn đồ án, họ sẽ mở AI Planning để kiểm tra và cập nhật kế hoạch tuần cho nhóm.”</blockquote>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Thành phần</th><th>Hook Review</th></tr></thead>
+          <tbody>
+            <tr><th>Why Habit?</th><td>Duy trì nhịp hướng dẫn đều, giảm quên việc và giảm lập kế hoạch thủ công.</td></tr>
+            <tr><th>Intended Behavior</th><td>Mỗi tuần mở AI Planning để kiểm tra hoặc cập nhật kế hoạch cho nhóm.</td></tr>
+            <tr><th>Frequency & Utility</th><td>Weekly, đủ hữu ích trong giai đoạn đồ án; giảm mạnh ngoài giai đoạn.</td></tr>
+            <tr><th>Internal Trigger</th><td>Sắp tới buổi hướng dẫn nhưng giảng viên chưa rõ nhóm cần làm gì tiếp theo.</td></tr>
+            <tr><th>External Trigger</th><td>Notification/email trước buổi hướng dẫn hoặc khi sinh viên cập nhật đề cương.</td></tr>
+            <tr><th>Action</th><td>Bấm <strong>“Cập nhật kế hoạch tuần này”</strong>.</td></tr>
+            <tr><th>Motivation</th><td>Tiết kiệm thời gian, giảm rủi ro nhóm đi sai hướng.</td></tr>
+            <tr><th>Ability</th><td>Giảm số bước, dùng dữ liệu có sẵn, CTA rõ.</td></tr>
+            <tr><th>Variable Reward</th><td><strong>The Self:</strong> cảm giác kiểm soát tiến độ. <strong>The Hunt:</strong> tìm được gợi ý phù hợp hơn.</td></tr>
+            <tr><th>Investment</th><td>Giảng viên sửa giả định, lưu kế hoạch, phản hồi lỗi; dữ liệu này làm lần review sau phù hợp hơn.</td></tr>
+            <tr><th>Next Trigger</th><td>Kế hoạch đã lưu tạo nhắc việc/review tuần sau.</td></tr>
+            <tr><th>User Impact</th><td>Có lợi nếu nhắc đúng thời điểm, có quyền tắt/snooze và không gây spam.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="hook-flow"><div><strong>Internal / External Trigger</strong><span>Chuẩn bị buổi hướng dẫn</span></div><b>→</b><div><strong>Action</strong><span>Cập nhật kế hoạch</span></div><b>→</b><div><strong>Variable Reward</strong><span>Kế hoạch phù hợp hơn</span></div><b>→</b><div><strong>Investment</strong><span>Sửa giả định + lưu</span></div><b>→</b><div><strong>Next Trigger</strong><span>Review tuần sau</span></div></div>
+        <div class="hook-details">
+          <article class="info-card"><h4>5 Whys → ba trigger có thể có</h4><ol><li>Sợ nhóm đi sai hướng trước buổi gặp.</li><li>Không nhớ nhóm nào cần ưu tiên khi hướng dẫn nhiều nhóm.</li><li>Muốn cảm thấy tiến độ tuần tới đang trong tầm kiểm soát.</li></ol><p><strong>Chọn:</strong> chưa rõ nhóm cần làm gì tiếp theo — xảy ra trực tiếp và thường xuyên nhất trước core action.</p></article>
+          <article class="info-card"><h4>Rào cản & ba thử nghiệm tăng Ability</h4><p><strong>Rào cản chính:</strong> time, brain cycles và non-routine.</p><ol><li>Prefill đề tài/trạng thái từ dữ liệu có sẵn.</li><li>Một CTA theo đúng trạng thái đề cương.</li><li>Mẫu kế hoạch 1 tuần có thể lưu rồi sửa dần.</li></ol></article>
+        </div>
+      </section>
+
+      <section id="tracking" class="page-section">
+        <div class="section-heading"><div><p class="eyebrow">11</p><h3>Metric Tracking Requirement</h3></div><button class="ghost-button" data-next="current-state">Quay về đầu</button></div>
+        <h4>Bảng 1 — Metric Definition</h4>
+        <div class="table-wrap wide-table"><table>
+          <thead><tr><th>Tên metric</th><th>Câu hỏi</th><th>Định nghĩa</th><th>Công thức</th><th>Window</th><th>Segment</th><th>Event</th></tr></thead>
+          <tbody>
+            <tr><th>Activation Rate</th><td>Bao nhiêu giảng viên đạt first value?</td><td>Lưu kế hoạch nháp đầu tiên.</td><td><code>activated_lecturers / onboarding_started_lecturers</code></td><td>Weekly</td><td>Lecturer</td><td><code>onboarding_started</code><br><code>plan_draft_saved</code></td></tr>
+            <tr><th>Weekly Active Lecturer</th><td>Ai đang active thật sự?</td><td>Lưu/cập nhật ≥1 kế hoạch bằng AI trong tuần.</td><td><code>count distinct lecturer_id with core action</code></td><td>Weekly</td><td>Lecturer</td><td><code>plan_draft_saved</code><br><code>plan_updated</code></td></tr>
+            <tr><th>Weekly Active Lecturer Retention</th><td>Giảng viên có quay lại dùng tiếp?</td><td>Core action ở tuần W và W+1.</td><td><code>retained_W+1 / active_W</code></td><td>Weekly</td><td>Lecturer</td><td><code>plan_draft_saved</code><br><code>plan_updated</code></td></tr>
+            <tr><th>AI Plan Acceptance Rate</th><td>Gợi ý AI có được dùng?</td><td>Kế hoạch AI được lưu sau review.</td><td><code>saved_ai_plans / generated_ai_plans</code></td><td>Weekly</td><td>Lecturer / use case</td><td><code>ai_plan_generated</code><br><code>plan_draft_saved</code></td></tr>
+            <tr><th>Recovery Success Rate</th><td>Khi AI sai, có khôi phục được?</td><td>Lỗi được sửa và dẫn tới kế hoạch dùng được.</td><td><code>recovered_flows / failure_reported_flows</code></td><td>Weekly</td><td>Lecturer</td><td><code>ai_feedback_submitted</code><br><code>recovery_completed</code></td></tr>
+          </tbody>
+        </table></div>
+        <h4>Bảng 2 — Tracking Events</h4>
+        <p class="section-intro"><strong>Event envelope dùng chung:</strong> mọi event đều có <code>user_id</code>, <code>timestamp</code> chuẩn hóa UTC và <code>role</code>; bảng dưới chỉ liệt kê properties riêng của từng event.</p>
+        <div class="table-wrap wide-table"><table>
+          <thead><tr><th>Event name</th><th>Ghi khi nào?</th><th>Identity</th><th>Properties</th><th>Metric</th><th>Tránh ghi trùng</th></tr></thead>
+          <tbody>
+            <tr><th><code>onboarding_started</code></th><td>Mở onboarding AI Planning.</td><td><code>user_id</code></td><td>role, entry_point, timestamp</td><td>Activation Rate</td><td>Refresh không ghi lại trong cùng session.</td></tr>
+            <tr><th><code>topic_selected</code></th><td>Chọn đề tài lập kế hoạch.</td><td><code>user_id</code></td><td>topic_id, outline_status, project_type</td><td>Funnel</td><td>Chỉ ghi khi topic thay đổi.</td></tr>
+            <tr><th><code>ai_plan_generated</code></th><td>AI tạo xong kế hoạch mock.</td><td><code>user_id</code></td><td>plan_type, outline_status, confidence_level, request_id</td><td>AI Plan Acceptance Rate</td><td>Retry cùng request_id không tính thêm.</td></tr>
+            <tr><th><code>plan_draft_saved</code></th><td>Kế hoạch chuyển chưa lưu → đã lưu.</td><td><code>user_id</code></td><td>plan_id, plan_type, edited_before_save</td><td>Activation, Core Action, Retention</td><td>Chỉ ghi đúng lần chuyển trạng thái.</td></tr>
+            <tr><th><code>plan_updated</code></th><td>Cập nhật kế hoạch đã có.</td><td><code>user_id</code></td><td>plan_id, update_type</td><td>Active User, Retention</td><td>Autosave không tính update chính.</td></tr>
+            <tr><th><code>ai_feedback_submitted</code></th><td>Báo lỗi hoặc sửa giả định.</td><td><code>user_id</code></td><td>feedback_type, original_assumption, corrected_value</td><td>Recovery</td><td>Không ghi lại cùng nội dung.</td></tr>
+            <tr><th><code>recovery_completed</code></th><td>Flow lỗi dẫn tới kế hoạch mới được lưu.</td><td><code>user_id</code></td><td>failure_type, recovery_action, plan_id</td><td>Recovery Success Rate</td><td>Chỉ ghi sau khi kế hoạch recovery được lưu.</td></tr>
+            <tr><th><code>plan_undo_clicked</code></th><td>Hoàn tác kế hoạch AI.</td><td><code>user_id</code></td><td>plan_id, reason_optional</td><td>Undo Rate / Quality</td><td>Một undo cho một plan version.</td></tr>
+          </tbody>
+        </table></div>
+        <h4>Event map trên onboarding flow</h4>
+        <div class="event-map"><div>Onboarding bắt đầu<code>onboarding_started</code></div><b>→</b><div>Chọn đề tài<code>topic_selected</code></div><b>→</b><div>AI tạo kế hoạch<code>ai_plan_generated</code></div><b>→</b><div>Lưu bản nháp<code>plan_draft_saved</code></div><b>→</b><div>Activation / Aha moment</div></div>
+        <h4>Tiêu chí nghiệm thu tracking</h4>
+        <ol class="acceptance-list">
+          <li><code>plan_draft_saved</code> chỉ ghi khi kế hoạch chuyển từ chưa lưu sang đã lưu.</li>
+          <li>Refresh, retry hoặc autosave không tạo thêm event core action.</li>
+          <li>Mỗi event có <code>user_id</code>, <code>timestamp</code>, <code>role</code> và properties cần cho metric.</li>
+          <li>Timestamp dùng cùng timezone hoặc chuẩn hóa UTC.</li>
+          <li>Không thu thập dữ liệu cá nhân không cần thiết của sinh viên.</li>
+          <li>Recovery chỉ thành công khi người dùng lưu kế hoạch mới sau khi sửa lỗi.</li>
+        </ol>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

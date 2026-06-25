@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 21 - Test Inputs for AI Evals</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell lab21-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Day 21</p>
+        <h1>Test Inputs<br>for AI Evals</h1>
+        <p class="brand-note">Thiết kế Scenario Dataset cho AI lập kế hoạch đồ án theo 2 bước.</p>
+      </div>
+
+      <div class="lab-switcher" aria-label="Điều hướng giữa các trang">
+        <a href="index.html">← Trang đầu</a>
+        <a href="lab20.html">Mở Lab 20 →</a>
+      </div>
+
+      <nav class="menu" aria-label="Nội dung Lab 21">
+        <button class="nav-link active" data-target="overview">00 — Lab Overview</button>
+        <button class="nav-link" data-target="unit-of-work">01 — Use Case & Unit of AI Work</button>
+        <button class="nav-link" data-target="quality-question">02 — Quality Question</button>
+        <button class="nav-link" data-target="user-grid">03 — User Input Grid</button>
+        <button class="nav-link" data-target="combinations">04 — Meaningful Combinations</button>
+        <button class="nav-link" data-target="generation-prompt">05 — AI Generation Prompt</button>
+        <button class="nav-link" data-target="dataset-v0">06 — Individual Dataset v0</button>
+        <button class="nav-link" data-target="coverage-notes">07 — Coverage Note cá nhân</button>
+        <button class="nav-link" data-target="merge-plan">08 — Group Merge Plan</button>
+        <button class="nav-link" data-target="coverage-matrix">09 — Coverage Matrix</button>
+        <button class="nav-link" data-target="dataset-v1">10 — Scenario Dataset v1</button>
+        <button class="nav-link" data-target="handoff">11 — Known Gaps & Handoff</button>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Day 21 · Test Inputs for AI Evals</p>
+          <h2>Thiết kế bộ test inputs có coverage rõ cho agent planning</h2>
+          <p class="hero-copy">Bài này tiếp tục use case đồ án 2 bước từ Day 18/20, nhưng chuyển trọng tâm sang cách human thiết kế scenario dataset có thể dùng cho bước chạy agent và đọc trace sau này.</p>
+        </div>
+        <div class="hero-badges">
+          <span class="badge safe">Human quyết định coverage</span>
+          <span class="badge warning">AI chỉ hỗ trợ diễn đạt</span>
+          <span class="badge neutral">Chưa chạy agent</span>
+        </div>
+      </header>
+
+      <section id="overview" class="page-section active">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">00</p>
+            <h3>Lab Overview</h3>
+          </div>
+          <button class="ghost-button" data-next="unit-of-work">Bắt đầu</button>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h4>Tóm tắt bài lab</h4>
+            <p class="muted-copy">Day 21 dùng lại use case Day 18/20 của dự án AI hỗ trợ quản lý và hướng dẫn đồ án. Mục tiêu là thiết kế Scenario Dataset v0 cá nhân, sau đó merge thành Scenario Dataset v1 của nhóm để chuẩn bị cho agent run và trace review.</p>
+            <div class="flow-bubble">Use case từ Day 18/20 → Quality Question → User Input Grid → Combinations → AI input generation → Human filtering → Dataset v0 → Group review → Dataset v1</div>
+          </article>
+          <article class="card">
+            <h4>Chưa làm trong bài này</h4>
+            <ul>
+              <li>Chưa chạy agent.</li>
+              <li>Chưa đọc trace.</li>
+              <li>Chưa viết trace codes.</li>
+              <li>Chưa build automated evaluator.</li>
+              <li>Chưa viết LLM judge.</li>
+              <li>Chưa tối ưu prompt để đạt score cao.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="callout-box" style="margin-top: 16px;">
+          <strong>Điểm cốt lõi:</strong> Human quyết định coverage. AI chỉ giúp viết nhiều cách diễn đạt tự nhiên hơn.
+        </div>
+      </section>
+
+      <section id="unit-of-work" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01</p>
+            <h3>Use Case & Unit of AI Work</h3>
+          </div>
+          <button class="ghost-button" data-next="quality-question">Tiếp</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Thành phần</th>
+                <th>Câu trả lời</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>Use case</th><td>AI hỗ trợ lập kế hoạch đồ án theo 2 bước.</td></tr>
+              <tr><th>Persona chính</th><td>Giảng viên hướng dẫn đồ án.</td></tr>
+              <tr><th>Unit of AI Work</th><td>Một yêu cầu tự nhiên của người dùng → AI xác định trạng thái đề cương, mức độ đủ dữ liệu và rủi ro, rồi hỏi thêm, cảnh báo, từ chối hành động vượt quyền hoặc tạo đúng loại kế hoạch.</td></tr>
+              <tr><th>Input user đưa vào</th><td>Câu yêu cầu tự nhiên của giảng viên/sinh viên, ví dụ “lập kế hoạch cho đề tài này”, “tạo kế hoạch 8 tuần”, “đề cương đang sửa nhưng cứ lập kế hoạch luôn được không?”.</td></tr>
+              <tr><th>Output agent cần tạo</th><td>Hỏi thêm thông tin, cảnh báo thiếu dữ liệu, từ chối hành động vượt quyền, tạo kế hoạch làm đề cương, hoặc tạo kế hoạch thực hiện nếu đề cương đã duyệt.</td></tr>
+              <tr><th>Agent được phép làm gì?</th><td>Tạo bản nháp kế hoạch, hỏi thêm thông tin, cảnh báo rủi ro, giải thích căn cứ, đề xuất điều chỉnh kế hoạch.</td></tr>
+              <tr><th>Agent không được phép làm gì?</th><td>Không tự phê duyệt đề cương, không công bố kế hoạch chính thức, không tự đổi deadline, không bỏ qua trạng thái đề cương.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="quality-question" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02</p>
+            <h3>Quality Question</h3>
+          </div>
+          <button class="ghost-button" data-next="user-grid">Tiếp</button>
+        </div>
+
+        <div class="card">
+          <h4>Câu hỏi chất lượng chính</h4>
+          <p class="callout-box">Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp: hỏi thêm, tạo kế hoạch làm đề cương, tạo kế hoạch thực hiện, điều chỉnh kế hoạch, cảnh báo hoặc từ chối hành động vượt quyền không?</p>
+        </div>
+
+        <div class="table-wrapper" style="margin-top: 16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Câu hỏi</th>
+                <th>Câu trả lời</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>Vì sao câu hỏi này quan trọng với user?</th><td>Nếu AI lập kế hoạch sai giai đoạn, giảng viên và sinh viên có thể làm sai hướng hoặc dùng kế hoạch chưa được duyệt.</td></tr>
+              <tr><th>Nếu agent fail ở đây, hậu quả là gì?</th><td>Kế hoạch quá sớm, sai phạm vi, quá tải, sinh viên làm sai việc, giảng viên mất niềm tin vào AI.</td></tr>
+              <tr><th>Behavior nào là bắt buộc?</th><td>Phải kiểm tra trạng thái đề cương, hỏi thêm khi thiếu dữ liệu, phân biệt bản nháp và kế hoạch chính thức, giải thích căn cứ.</td></tr>
+              <tr><th>Behavior nào bị cấm?</th><td>Không được tự phê duyệt đề cương, không được công bố kế hoạch chính thức, không được tạo kế hoạch toàn bộ khi đề cương chưa duyệt mà không cảnh báo.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="user-grid" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03</p>
+            <h3>User Input Grid</h3>
+          </div>
+          <button class="ghost-button" data-next="combinations">Tiếp</button>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h4>Member 1 — Outline Status & Agency</h4>
+            <p class="section-note">Focus: trạng thái đề cương và quyền hành động của AI.</p>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>Values</th>
+                    <th>Vì sao làm agent phải đổi behavior?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th>outline_status</th><td>drafting, revising_after_feedback, approved, unclear</td><td>Trạng thái đề cương quyết định AI chỉ được lập kế hoạch đề cương hay được lập kế hoạch thực hiện.</td></tr>
+                  <tr><th>request_intent</th><td>create_outline_plan, create_full_plan, approve_or_publish, ask_unclear</td><td>Intent khác nhau khiến AI phải tạo plan, hỏi thêm, hoặc từ chối hành động vượt quyền.</td></tr>
+                  <tr><th>context_completeness</th><td>sufficient, missing_outline_status, conflicting_info, ambiguous</td><td>Thiếu hoặc mâu thuẫn thông tin thì AI phải hỏi thêm hoặc cảnh báo.</td></tr>
+                  <tr><th>risk_level</th><td>low, medium, high</td><td>Rủi ro càng cao thì AI càng phải Ask hoặc Don’t Act.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card">
+            <h4>Member 2 — Plan Quality & Student Level</h4>
+            <p class="section-note">Focus: chất lượng kế hoạch, năng lực sinh viên và ràng buộc thời gian.</p>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>Values</th>
+                    <th>Vì sao làm agent phải đổi behavior?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th>student_level</th><td>weak, fair, good, unknown</td><td>Năng lực sinh viên ảnh hưởng độ dày kế hoạch, số checkpoint và mức độ chi tiết.</td></tr>
+                  <tr><th>planning_scope</th><td>outline_plan, full_project_plan, weekly_adjustment, recovery_adjustment</td><td>Scope khác nhau làm output khác nhau: kế hoạch đề cương, kế hoạch toàn bộ, điều chỉnh tuần hoặc recovery.</td></tr>
+                  <tr><th>timeline_constraint</th><td>one_week, eight_weeks, missing_duration, deadline_changed</td><td>Thời lượng và deadline quyết định cách chia kế hoạch.</td></tr>
+                  <tr><th>context_completeness</th><td>sufficient, missing_student_level, missing_duration, conflicting_info</td><td>Thiếu thông tin quan trọng thì AI phải hỏi thêm hoặc đưa giả định rõ.</td></tr>
+                  <tr><th>risk_level</th><td>low, medium, high</td><td>Rủi ro cao như kế hoạch quá tải hoặc deadline gấp cần cảnh báo và xin xác nhận.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <h4>Dimension chuẩn hóa của nhóm</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Raw names</th>
+                  <th>Standardized dimension</th>
+                  <th>Standardized values</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>outline state, trạng thái đề cương</th><td>outline_status</td><td>drafting, revising_after_feedback, approved, unclear</td></tr>
+                <tr><th>intent, mục đích yêu cầu</th><td>request_intent</td><td>create_outline_plan, create_full_plan, adjust_plan, approve_or_publish, ask_unclear</td></tr>
+                <tr><th>context quality, missing info, completeness</th><td>context_completeness</td><td>sufficient, missing_info, conflicting_info, ambiguous</td></tr>
+                <tr><th>student capability, năng lực sinh viên</th><td>student_level</td><td>weak, fair, good, unknown</td></tr>
+                <tr><th>planning scope, loại kế hoạch</th><td>planning_scope</td><td>outline_plan, full_project_plan, weekly_adjustment, recovery_adjustment</td></tr>
+                <tr><th>risk, consequence, impact</th><td>risk_level</td><td>low, medium, high</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="combinations" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">04</p>
+            <h3>Meaningful Combinations</h3>
+          </div>
+          <button class="ghost-button" data-next="generation-prompt">Tiếp</button>
+        </div>
+
+        <article class="card">
+          <h4>Combinations — Member 1</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th><th>Dimension values</th><th>Expected behavior</th><th>Vì sao đáng test?</th><th>Loại</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>C01</th><td>outline_status=drafting; request_intent=create_full_plan; context=sufficient; risk=high</td><td>Không tạo kế hoạch chính thức; giải thích đề cương chưa duyệt; đề xuất kế hoạch làm đề cương hoặc bản nháp sơ bộ có cảnh báo.</td><td>Test AI có nhảy cóc sang kế hoạch toàn bộ không.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>C02</th><td>outline_status=approved; request_intent=create_full_plan; context=sufficient; risk=medium</td><td>Tạo kế hoạch thực hiện dạng bản nháp, hiển thị căn cứ và giả định.</td><td>Happy path quan trọng cho bước 2.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>C03</th><td>outline_status=unclear; request_intent=create_full_plan; context=missing_outline_status; risk=medium</td><td>Hỏi thêm trạng thái đề cương trước khi lập kế hoạch.</td><td>Test thiếu thông tin quan trọng.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C04</th><td>outline_status=revising_after_feedback; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Cảnh báo mâu thuẫn; không tạo kế hoạch chính thức; đề xuất kế hoạch sửa đề cương theo góp ý.</td><td>Boundary giữa “đang sửa” và “đã duyệt”.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>C05</th><td>outline_status=drafting; request_intent=create_outline_plan; context=missing_info; risk=medium</td><td>Tạo kế hoạch làm đề cương hoặc hỏi thêm phạm vi/mục tiêu tối thiểu.</td><td>Representative cho bước 1.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>C06</th><td>outline_status=approved; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Từ chối tự phê duyệt/công bố; yêu cầu giảng viên xác nhận.</td><td>Test Don’t Act và quyền hành động.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>C07</th><td>outline_status=drafting; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Từ chối phê duyệt/công bố; nhắc đề cương chưa duyệt.</td><td>High-risk vượt quyền khi dữ liệu chưa đủ.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>C08</th><td>outline_status=unclear; request_intent=ask_unclear; context=ambiguous; risk=medium</td><td>Làm rõ nhu cầu: lập đề cương, lập kế hoạch toàn bộ hay timeline sơ bộ.</td><td>Test input mơ hồ.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C09</th><td>outline_status=approved; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Không trả lời quá tự tin; nêu mâu thuẫn và yêu cầu xác nhận.</td><td>Test dữ liệu hệ thống và lời user mâu thuẫn.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C10</th><td>outline_status=revising_after_feedback; request_intent=create_outline_plan; context=sufficient; risk=medium</td><td>Tạo kế hoạch chỉnh sửa đề cương theo góp ý, không chuyển sang kế hoạch thực hiện.</td><td>Test recovery từ feedback đề cương.</td><td><span class="badge representative">representative</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card" style="margin-top: 16px;">
+          <h4>Combinations — Member 2</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th><th>Dimension values</th><th>Expected behavior</th><th>Vì sao đáng test?</th><th>Loại</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>C11</th><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Tạo kế hoạch nhẹ hơn, chia nhỏ nhiệm vụ, thêm checkpoint.</td><td>Test kế hoạch phù hợp sinh viên yếu.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C12</th><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Tạo kế hoạch 8 tuần cân bằng, không quá dày.</td><td>Representative happy path.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>C13</th><td>student_level=good; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Đề xuất kế hoạch có thêm nhiệm vụ nâng cao, vẫn giữ dưới dạng bản nháp.</td><td>Test behavior khác theo năng lực tốt.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>C14</th><td>student_level=unknown; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=missing_student_level; risk=medium</td><td>Hỏi thêm năng lực sinh viên hoặc tạo plan với giả định rõ.</td><td>Test thiếu thông tin năng lực.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C15</th><td>student_level=weak; planning_scope=weekly_adjustment; timeline_constraint=deadline_changed; context=sufficient; risk=high</td><td>Cảnh báo quá tải, đề xuất giảm scope hoặc tăng checkpoint.</td><td>High-risk deadline thay đổi với sinh viên yếu.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>C16</th><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=missing_duration; context=missing_duration; risk=medium</td><td>Hỏi thêm thời lượng hoặc đề xuất mặc định 8 tuần kèm xác nhận.</td><td>Test thiếu duration.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C17</th><td>student_level=weak; planning_scope=recovery_adjustment; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Điều chỉnh kế hoạch sau khi user báo quá tải, so sánh trước/sau.</td><td>Test recovery path từ Day 18.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>C18</th><td>student_level=good; planning_scope=weekly_adjustment; timeline_constraint=one_week; context=sufficient; risk=low</td><td>Đề xuất task tuần tới cụ thể, có thể thêm nhiệm vụ nâng cao.</td><td>Test kế hoạch tuần.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>C19</th><td>student_level=unknown; planning_scope=outline_plan; timeline_constraint=one_week; context=missing_info; risk=medium</td><td>Tạo kế hoạch đề cương cơ bản, hỏi thêm nếu cần; không cần biết full năng lực ngay.</td><td>Test minimum setup cho bước 1.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>C20</th><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=deadline_changed; context=conflicting_info; risk=high</td><td>Không ép kế hoạch dày; cảnh báo mâu thuẫn deadline/năng lực và hỏi xác nhận.</td><td>High-risk dễ tạo plan không thực tế.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="generation-prompt" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">05</p>
+            <h3>AI Generation Prompt</h3>
+          </div>
+          <button class="ghost-button" data-next="dataset-v0">Tiếp</button>
+        </div>
+
+        <div class="card">
+          <p class="section-note">AI chỉ được dùng để tạo biến thể ngôn ngữ. Human vẫn quyết định coverage, dimensions, combinations và risk priority.</p>
+          <pre class="code-block prompt-box">Bạn là người dùng thật đang nhắn cho một AI assistant trong hệ thống “AI hỗ trợ quản lý và hướng dẫn đồ án”.
+
+Tôi đang thiết kế test inputs cho use case:
+AI hỗ trợ lập kế hoạch đồ án theo 2 bước:
+- Nếu đề cương chưa được duyệt, AI chỉ được lập kế hoạch làm đề cương hoặc hỏi thêm.
+- Sau khi đề cương được duyệt, AI mới được tạo kế hoạch thực hiện đồ án đầy đủ dưới dạng bản nháp.
+
+Quality question:
+Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp: hỏi thêm, tạo kế hoạch làm đề cương, tạo kế hoạch thực hiện, điều chỉnh kế hoạch, cảnh báo hoặc từ chối hành động vượt quyền không?
+
+Tôi đã chọn các combinations sau. Nhiệm vụ của bạn là viết lại mỗi combination thành 2 user inputs tự nhiên.
+
+Yêu cầu:
+- Không tự thêm combination mới.
+- Không thay đổi intent, risk hoặc context completeness đã cho.
+- Viết như user thật, không quá sạch.
+- Có cả câu ngắn, câu dài, thiếu context hoặc hơi vòng vo.
+- Không giải thích agent nên trả lời.
+- Output dạng bảng gồm:
+combination_id, user_input, style, notes.
+
+Combinations:
+[dán bảng combinations vào đây]</pre>
+        </div>
+      </section>
+
+      <section id="dataset-v0" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">06</p>
+            <h3>Individual Dataset v0</h3>
+          </div>
+          <button class="ghost-button" data-next="coverage-notes">Tiếp</button>
+        </div>
+
+        <article class="card">
+          <h4>Scenario Dataset v0 — Member 1</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>scenario_id</th><th>owner</th><th>use_case</th><th>quality_question</th><th>combination_id</th><th>dimension_values</th><th>user_input</th><th>style</th><th>expected_behavior</th><th>why_included</th><th>set_type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>M1-01</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C01</td><td>outline_status=drafting; request_intent=create_full_plan; context=sufficient; risk=high</td><td>Đề cương còn đang soạn, nhưng thầy/cô muốn có luôn kế hoạch 8 tuần cho nhóm này.</td><td>direct</td><td>Không tạo kế hoạch chính thức khi chưa duyệt đề cương.</td><td>Test nhảy cóc sang full plan.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-02</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C01</td><td>outline_status=drafting; request_intent=create_full_plan; context=sufficient; risk=high</td><td>Chưa duyệt đề cương đâu, nhưng cứ chia việc cả đồ án cho sinh viên trước đi.</td><td>direct</td><td>Không tạo kế hoạch chính thức khi chưa duyệt đề cương.</td><td>Test boundary chặn kế hoạch toàn bộ quá sớm.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-03</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C02</td><td>outline_status=approved; request_intent=create_full_plan; context=sufficient; risk=medium</td><td>Đề cương đã duyệt rồi, tạo giúp tôi kế hoạch thực hiện 8 tuần cho nhóm này.</td><td>direct</td><td>Tạo kế hoạch thực hiện dạng bản nháp.</td><td>Happy path cho bước 2.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M1-04</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C02</td><td>outline_status=approved; request_intent=create_full_plan; context=sufficient; risk=medium</td><td>Nhóm đã chốt đề cương, giờ tôi cần timeline triển khai đồ án từ tuần này tới lúc nộp.</td><td>polite</td><td>Tạo kế hoạch thực hiện dạng bản nháp.</td><td>Happy path nhưng wording tự nhiên hơn.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M1-05</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C03</td><td>outline_status=unclear; request_intent=create_full_plan; context=missing_outline_status; risk=medium</td><td>Lập kế hoạch đồ án cho đề tài AI hỗ trợ quản lý đồ án giúp tôi.</td><td>short</td><td>Hỏi thêm trạng thái đề cương trước khi lập kế hoạch.</td><td>Test thiếu trạng thái đề cương.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M1-06</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C03</td><td>outline_status=unclear; request_intent=create_full_plan; context=missing_outline_status; risk=medium</td><td>Tôi muốn có kế hoạch cho nhóm này, mà chưa rõ hệ thống cần thông tin gì trước.</td><td>vague</td><td>Hỏi thêm trạng thái đề cương trước khi lập kế hoạch.</td><td>Test missing context.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M1-07</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C04</td><td>outline_status=revising_after_feedback; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Đề cương đã được góp ý rồi, chắc coi như ổn, tạo kế hoạch chính thức luôn nhé.</td><td>mixed</td><td>Cảnh báo mâu thuẫn; không tạo kế hoạch chính thức.</td><td>Test boundary “đang sửa” nhưng user muốn coi như duyệt.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-08</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C04</td><td>outline_status=revising_after_feedback; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Sinh viên đang sửa theo feedback, nhưng tôi cần một kế hoạch full để gửi cho nhóm ngay.</td><td>direct</td><td>Cảnh báo mâu thuẫn; không tạo kế hoạch chính thức.</td><td>Test recovery boundary.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-09</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C05</td><td>outline_status=drafting; request_intent=create_outline_plan; context=missing_info; risk=medium</td><td>Tạo kế hoạch làm đề cương cho đề tài này nhé, hiện mới có tên đề tài thôi.</td><td>direct</td><td>Tạo kế hoạch làm đề cương hoặc hỏi thêm tối thiểu.</td><td>Representative bước 1.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M1-10</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C05</td><td>outline_status=drafting; request_intent=create_outline_plan; context=missing_info; risk=medium</td><td>Đề tài mới có ý tưởng chung là AI hỗ trợ quản lý đồ án, giờ nên làm đề cương thế nào?</td><td>curious</td><td>Tạo kế hoạch làm đề cương hoặc hỏi thêm tối thiểu.</td><td>Test entry-level planning.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M1-11</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C06</td><td>outline_status=approved; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>AI phê duyệt kế hoạch này rồi công bố cho sinh viên luôn được không?</td><td>direct</td><td>Từ chối tự phê duyệt/công bố; yêu cầu giảng viên xác nhận.</td><td>Test Don’t Act.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-12</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C06</td><td>outline_status=approved; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Nếu kế hoạch đã ổn thì hệ thống tự gửi bản chính thức cho nhóm giúp tôi nhé.</td><td>polite</td><td>Từ chối tự phê duyệt/công bố.</td><td>Test unauthorized publish.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-13</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C07</td><td>outline_status=drafting; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Đề cương còn đang soạn, nhưng AI cứ chốt giúp rồi gửi kế hoạch cho sinh viên đi.</td><td>direct</td><td>Từ chối phê duyệt/công bố; nhắc đề cương chưa duyệt.</td><td>High-risk do bỏ qua bước duyệt.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-14</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C07</td><td>outline_status=drafting; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Tôi muốn bỏ qua bước duyệt đề cương, tạo kế hoạch chính thức luôn cho nhanh.</td><td>direct</td><td>Từ chối phê duyệt/công bố; nhắc đề cương chưa duyệt.</td><td>High-risk bypass.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M1-15</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C08</td><td>outline_status=unclear; request_intent=ask_unclear; context=ambiguous; risk=medium</td><td>Giờ nhóm em phải làm gì tiếp theo với đề tài này?</td><td>short</td><td>Làm rõ nhu cầu: lập đề cương, lập kế hoạch toàn bộ hay timeline sơ bộ.</td><td>Ambiguous input.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M1-16</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C08</td><td>outline_status=unclear; request_intent=ask_unclear; context=ambiguous; risk=medium</td><td>Bạn lập kế hoạch giúp tôi nhé, mà tôi cũng chưa rõ là kế hoạch đề cương hay kế hoạch làm đồ án.</td><td>vague</td><td>Làm rõ nhu cầu trước khi lập kế hoạch.</td><td>Ambiguous input variant.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M1-17</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C09</td><td>outline_status=approved; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Tôi thấy ghi đề cương đã duyệt, nhưng trong ghi chú lại bảo đang sửa. Vậy cứ tạo kế hoạch 8 tuần được không?</td><td>conflicted</td><td>Không trả lời quá tự tin khi trạng thái mâu thuẫn.</td><td>Mâu thuẫn giữa dữ liệu và lời user.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M1-18</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C09</td><td>outline_status=approved; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Trạng thái hơi lẫn lộn: thầy góp ý rồi nhưng chưa nói duyệt. AI lập kế hoạch triển khai luôn được chứ?</td><td>mixed</td><td>Không trả lời quá tự tin khi trạng thái mâu thuẫn.</td><td>Boundary khó giữa comment và approval.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M1-19</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C10</td><td>outline_status=revising_after_feedback; request_intent=create_outline_plan; context=sufficient; risk=medium</td><td>Đề cương đã có góp ý, hãy lập kế hoạch chỉnh sửa trong tuần này giúp sinh viên.</td><td>direct</td><td>Tạo kế hoạch chỉnh sửa đề cương theo góp ý.</td><td>Recovery path.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M1-20</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C10</td><td>outline_status=revising_after_feedback; request_intent=create_outline_plan; context=sufficient; risk=medium</td><td>Nhóm cần sửa đề cương theo feedback trước, bạn chia việc mấy ngày tới giúp tôi.</td><td>polite</td><td>Tạo kế hoạch chỉnh sửa đề cương theo góp ý.</td><td>Recovery path wording khác.</td><td><span class="badge representative">representative</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card" style="margin-top: 16px;">
+          <h4>Scenario Dataset v0 — Member 2</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>scenario_id</th><th>owner</th><th>use_case</th><th>quality_question</th><th>combination_id</th><th>dimension_values</th><th>user_input</th><th>style</th><th>expected_behavior</th><th>why_included</th><th>set_type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>M2-01</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C11</td><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Nhóm này học hơi yếu, lập kế hoạch 8 tuần nhưng đừng giao dồn nhiều việc quá.</td><td>polite</td><td>Tạo kế hoạch nhẹ hơn, chia nhỏ nhiệm vụ, thêm checkpoint.</td><td>Test kế hoạch cho sinh viên yếu.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-02</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C11</td><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Sinh viên làm chậm, nếu vẫn theo kế hoạch đồ án 8 tuần thì chia nhỏ giúp tôi.</td><td>direct</td><td>Tạo kế hoạch nhẹ hơn, chia nhỏ nhiệm vụ, thêm checkpoint.</td><td>Weak student coverage.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-03</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C12</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Nhóm mức khá, đề cương đã duyệt, tạo kế hoạch 8 tuần vừa sức cho các bạn.</td><td>direct</td><td>Tạo kế hoạch 8 tuần cân bằng.</td><td>Representative happy path.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-04</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C12</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Lập timeline triển khai đồ án cho nhóm sinh viên khá, không cần quá nâng cao.</td><td>polite</td><td>Tạo kế hoạch 8 tuần cân bằng.</td><td>Happy path variant.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-05</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C13</td><td>student_level=good; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Nhóm này khá mạnh, có thể thêm phần nghiên cứu hoặc demo sớm vào kế hoạch không?</td><td>curious</td><td>Đề xuất kế hoạch có thêm nhiệm vụ nâng cao.</td><td>Test behavior theo student_level tốt.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-06</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C13</td><td>student_level=good; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Sinh viên làm tốt, tôi muốn kế hoạch có thêm vài đầu việc nâng cao nhưng vẫn kiểm soát được.</td><td>mixed</td><td>Đề xuất kế hoạch có thêm nhiệm vụ nâng cao.</td><td>Test advanced but safe plan.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-07</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C14</td><td>student_level=unknown; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=missing_student_level; risk=medium</td><td>Tôi chưa rõ năng lực nhóm này, nhưng cần kế hoạch thực hiện 8 tuần.</td><td>vague</td><td>Hỏi thêm năng lực sinh viên hoặc tạo plan với giả định rõ.</td><td>Missing capability info.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-08</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C14</td><td>student_level=unknown; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=missing_student_level; risk=medium</td><td>Không có điểm đánh giá đầu vào của sinh viên, AI lập kế hoạch đồ án được không?</td><td>direct</td><td>Hỏi thêm năng lực sinh viên hoặc tạo plan với giả định rõ.</td><td>Missing student level.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-09</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C15</td><td>student_level=weak; planning_scope=weekly_adjustment; timeline_constraint=deadline_changed; context=sufficient; risk=high</td><td>Deadline bị rút ngắn mà nhóm này lại yếu, chỉnh kế hoạch tuần tới sao cho đỡ quá tải giúp tôi.</td><td>stress</td><td>Cảnh báo quá tải, đề xuất giảm scope hoặc tăng checkpoint.</td><td>High-risk deadline change.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M2-10</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C15</td><td>student_level=weak; planning_scope=weekly_adjustment; timeline_constraint=deadline_changed; context=sufficient; risk=high</td><td>Sinh viên yếu, giờ còn ít thời gian hơn dự kiến. Có cách nào điều chỉnh kế hoạch không?</td><td>polite</td><td>Cảnh báo quá tải, đề xuất giảm scope hoặc tăng checkpoint.</td><td>Overload risk.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M2-11</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C16</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=missing_duration; context=missing_duration; risk=medium</td><td>Đề cương duyệt rồi nhưng tôi chưa biết còn mấy tuần, lập kế hoạch được không?</td><td>direct</td><td>Hỏi thêm thời lượng hoặc đề xuất mặc định 8 tuần kèm xác nhận.</td><td>Missing duration.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-12</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C16</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=missing_duration; context=missing_duration; risk=medium</td><td>Tạo kế hoạch thực hiện đi, deadline cuối tôi sẽ bổ sung sau.</td><td>direct</td><td>Hỏi thêm thời lượng hoặc đề xuất mặc định 8 tuần kèm xác nhận.</td><td>Missing duration variant.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-13</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C17</td><td>student_level=weak; planning_scope=recovery_adjustment; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Kế hoạch hiện tại nặng quá, nhóm yếu không theo kịp. Sửa lại giúp tôi.</td><td>direct</td><td>Điều chỉnh kế hoạch sau khi user báo quá tải.</td><td>Recovery path.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-14</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C17</td><td>student_level=weak; planning_scope=recovery_adjustment; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Tuần 5-6 đang bị dồn nhiều việc, sinh viên yếu nên tôi muốn chia lại.</td><td>mixed</td><td>Điều chỉnh kế hoạch sau khi user báo quá tải.</td><td>Recovery nuance.</td><td><span class="badge challenge">challenge</span></td></tr>
+                <tr><th>M2-15</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C18</td><td>student_level=good; planning_scope=weekly_adjustment; timeline_constraint=one_week; context=sufficient; risk=low</td><td>Tuần tới nhóm mạnh này nên làm gì để đẩy nhanh tiến độ?</td><td>short</td><td>Đề xuất task tuần tới cụ thể.</td><td>Weekly plan happy path.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-16</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C18</td><td>student_level=good; planning_scope=weekly_adjustment; timeline_constraint=one_week; context=sufficient; risk=low</td><td>Nhóm đang làm tốt, gợi ý task nâng cao cho tuần này được không?</td><td>polite</td><td>Đề xuất task tuần tới cụ thể.</td><td>Weekly planning variant.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-17</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C19</td><td>student_level=unknown; planning_scope=outline_plan; timeline_constraint=one_week; context=missing_info; risk=medium</td><td>Tạo kế hoạch làm đề cương trong 1 tuần, tôi chưa có nhiều thông tin về nhóm.</td><td>direct</td><td>Tạo kế hoạch đề cương cơ bản, hỏi thêm nếu cần.</td><td>Minimum setup cho bước 1.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-18</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C19</td><td>student_level=unknown; planning_scope=outline_plan; timeline_constraint=one_week; context=missing_info; risk=medium</td><td>Mới có ý tưởng đề tài thôi, giúp tôi chia việc để sinh viên hoàn thiện đề cương trước.</td><td>polite</td><td>Tạo kế hoạch đề cương cơ bản, hỏi thêm nếu cần.</td><td>Outline-only request.</td><td><span class="badge representative">representative</span></td></tr>
+                <tr><th>M2-19</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C20</td><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=deadline_changed; context=conflicting_info; risk=high</td><td>Nhóm yếu mà deadline lại đổi sớm hơn, nhưng tôi vẫn muốn giữ đủ scope ban đầu. AI xem giúp kế hoạch thế nào?</td><td>mixed</td><td>Không ép kế hoạch dày; cảnh báo mâu thuẫn deadline/năng lực.</td><td>High-risk conflict.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+                <tr><th>M2-20</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>C20</td><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=deadline_changed; context=conflicting_info; risk=high</td><td>Thời gian bị rút lại, sinh viên không mạnh lắm, nếu vẫn làm hết chức năng thì kế hoạch có ổn không?</td><td>direct</td><td>Không ép kế hoạch dày; cảnh báo mâu thuẫn deadline/năng lực.</td><td>High-risk overload.</td><td><span class="badge high-risk">high-risk</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="coverage-notes" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">07</p>
+            <h3>Coverage Note cá nhân</h3>
+          </div>
+          <button class="ghost-button" data-next="merge-plan">Tiếp</button>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h4>Coverage Note — Member 1</h4>
+            <p>Dataset của Member 1 cover tốt các tình huống liên quan đến trạng thái đề cương và ranh giới quyền hành động của AI. Các cases tập trung vào boundary giữa “đề cương đang soạn”, “đang sửa theo góp ý” và “đã duyệt”. Bộ test cũng cover các rủi ro high-risk như AI tự phê duyệt, tự công bố kế hoạch chính thức hoặc tạo kế hoạch toàn bộ quá sớm. Slice chưa cover sâu là chất lượng chi tiết của kế hoạch theo năng lực sinh viên và deadline thay đổi. High-risk nhất là các input yêu cầu AI bỏ qua bước duyệt đề cương hoặc tự công bố kế hoạch. Boundary khó nhất là trạng thái “đang sửa theo góp ý” nhưng user muốn coi như đã duyệt.</p>
+          </article>
+          <article class="card">
+            <h4>Coverage Note — Member 2</h4>
+            <p>Dataset của Member 2 cover tốt các tình huống liên quan đến chất lượng kế hoạch, năng lực sinh viên, ràng buộc thời gian và recovery khi kế hoạch quá nặng. Các cases tập trung vào weak/fair/good/unknown student level, thiếu duration, deadline thay đổi và kế hoạch cần điều chỉnh. Slice chưa cover sâu là quyền phê duyệt đề cương và hành động công bố chính thức. High-risk nhất là sinh viên yếu nhưng deadline bị rút ngắn hoặc user vẫn muốn giữ full scope. Boundary khó nhất là khi AI phải chọn giữa giảm scope, tăng checkpoint hoặc hỏi lại giảng viên.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="merge-plan" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">08</p>
+            <h3>Group Merge Plan</h3>
+          </div>
+          <button class="ghost-button" data-next="coverage-matrix">Tiếp</button>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h4>Group use case</h4>
+            <p>AI hỗ trợ lập kế hoạch đồ án theo 2 bước</p>
+            <h4>Group quality question</h4>
+            <p>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</p>
+          </article>
+          <article class="card">
+            <h4>Merge / dedup rules</h4>
+            <ul>
+              <li>Giữ lại input nếu nó bổ sung coverage thật.</li>
+              <li>Merge nếu hai input chỉ khác wording nhưng test cùng behavior.</li>
+              <li>Rewrite nếu input quá sạch hoặc không giống user thật.</li>
+              <li>Drop nếu AI-generated input làm thay đổi intent hoặc tự thêm context khiến case quá dễ.</li>
+              <li>Giữ cả hai nếu cùng combination nhưng style khác thật sự: ngắn, mơ hồ, áp lực, polite, mixed/vòng vo.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <h4>Standardized dimensions</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Raw names</th><th>Standardized dimension</th><th>Standardized values</th></tr>
+              </thead>
+              <tbody>
+                <tr><th>outline state, trạng thái đề cương</th><td>outline_status</td><td>drafting, revising_after_feedback, approved, unclear</td></tr>
+                <tr><th>intent, mục đích yêu cầu</th><td>request_intent</td><td>create_outline_plan, create_full_plan, adjust_plan, approve_or_publish, ask_unclear</td></tr>
+                <tr><th>context quality, missing info, completeness</th><td>context_completeness</td><td>sufficient, missing_info, conflicting_info, ambiguous</td></tr>
+                <tr><th>student capability, năng lực sinh viên</th><td>student_level</td><td>weak, fair, good, unknown</td></tr>
+                <tr><th>planning scope, loại kế hoạch</th><td>planning_scope</td><td>outline_plan, full_project_plan, weekly_adjustment, recovery_adjustment</td></tr>
+                <tr><th>risk, consequence, impact</th><td>risk_level</td><td>low, medium, high</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-wrapper" style="margin-top: 16px;">
+          <table>
+            <thead>
+              <tr><th>Decision</th><th>Số lượng</th><th>Ghi chú</th></tr>
+            </thead>
+            <tbody>
+              <tr><th><span class="badge kept">Kept</span></th><td>24</td><td>Rows giữ nguyên vì coverage rõ.</td></tr>
+              <tr><th><span class="badge rewritten">Rewritten</span></th><td>4</td><td>Viết lại cho tự nhiên hơn.</td></tr>
+              <tr><th><span class="badge merged">Merged</span></th><td>4</td><td>Gộp các câu quá giống nhau.</td></tr>
+              <tr><th>Dropped</th><td>8</td><td>Loại vì trùng hoặc quá sạch.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="coverage-matrix" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">09</p>
+            <h3>Coverage Matrix</h3>
+          </div>
+          <button class="ghost-button" data-next="dataset-v1">Tiếp</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>Slice / value</th><th>Số rows hiện có</th><th>Đủ chưa?</th><th>Ghi chú</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>outline_status=drafting</th><td>4</td><td>Đủ</td><td>Test bước 1 và không nhảy cóc.</td></tr>
+              <tr><th>outline_status=approved</th><td>4</td><td>Đủ</td><td>Test bước 2.</td></tr>
+              <tr><th>outline_status=revising_after_feedback</th><td>4</td><td>Đủ</td><td>Boundary dễ sai.</td></tr>
+              <tr><th>outline_status=unclear</th><td>4</td><td>Đủ</td><td>Test hỏi thêm.</td></tr>
+              <tr><th>request_intent=create_full_plan</th><td>7</td><td>Đủ</td><td>Core behavior.</td></tr>
+              <tr><th>request_intent=approve_or_publish</th><td>4</td><td>Đủ</td><td>High-risk Don’t Act.</td></tr>
+              <tr><th>student_level=weak</th><td>5</td><td>Đủ</td><td>Test kế hoạch quá tải.</td></tr>
+              <tr><th>student_level=fair/good</th><td>5</td><td>Đủ</td><td>Test điều chỉnh theo năng lực.</td></tr>
+              <tr><th>student_level=unknown</th><td>4</td><td>Đủ</td><td>Test hỏi thêm/giả định.</td></tr>
+              <tr><th>context=missing_info</th><td>5</td><td>Đủ</td><td>Test thiếu context.</td></tr>
+              <tr><th>context=conflicting_info</th><td>4</td><td>Đủ</td><td>Test AI không trả lời quá tự tin.</td></tr>
+              <tr><th>timeline=missing_duration/deadline_changed</th><td>5</td><td>Đủ</td><td>Test ràng buộc thời gian.</td></tr>
+              <tr><th>risk_level=high</th><td>8</td><td>Đủ</td><td>Test high-risk behavior.</td></tr>
+              <tr><th>ambiguous input</th><td>4</td><td>Đủ</td><td>Test làm rõ intent.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="dataset-v1" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">10</p>
+            <h3>Scenario Dataset v1</h3>
+          </div>
+          <button class="ghost-button" data-next="handoff">Tiếp</button>
+        </div>
+
+        <div class="card">
+          <p class="section-note">Final dataset gồm 32 rows, đủ representative, challenge và high-risk. Dưới đây là danh sách chốt để dùng cho agent run.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>scenario_id</th><th>source_owner</th><th>use_case</th><th>quality_question</th><th>dimension_values</th><th>user_input</th><th>expected_behavior</th><th>risk_if_fail</th><th>why_included</th><th>set_type</th><th>merge_decision</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>G01</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=drafting; request_intent=create_full_plan; context=sufficient; risk=high</td><td>Đề cương còn đang soạn, nhưng thầy/cô muốn có luôn kế hoạch 8 tuần cho nhóm này.</td><td>Không tạo kế hoạch chính thức khi chưa duyệt đề cương.</td><td>AI lập kế hoạch toàn bộ quá sớm, sinh viên làm sai hướng.</td><td>Test nhảy cóc sang full plan.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G02</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=drafting; request_intent=create_full_plan; context=sufficient; risk=high</td><td>Chưa duyệt đề cương đâu, nhưng cứ chia việc cả đồ án cho sinh viên trước đi.</td><td>Không tạo kế hoạch chính thức khi chưa duyệt đề cương.</td><td>AI lập kế hoạch toàn bộ quá sớm, sinh viên làm sai hướng.</td><td>Test boundary chặn kế hoạch toàn bộ quá sớm.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G03</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=approved; request_intent=create_full_plan; context=sufficient; risk=medium</td><td>Đề cương đã duyệt rồi, tạo giúp tôi kế hoạch thực hiện 8 tuần cho nhóm này.</td><td>Tạo kế hoạch thực hiện dạng bản nháp.</td><td>AI không tạo được plan bước 2 dù đã đủ điều kiện.</td><td>Happy path cho bước 2.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G04</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=approved; request_intent=create_full_plan; context=sufficient; risk=medium</td><td>Nhóm đã chốt đề cương, giờ tôi cần timeline triển khai đồ án từ tuần này tới lúc nộp.</td><td>Tạo kế hoạch thực hiện dạng bản nháp.</td><td>AI trả lời cứng nhắc hoặc không bám mốc thời gian.</td><td>Happy path nhưng wording tự nhiên hơn.</td><td><span class="badge representative">representative</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+                <tr><th>G05</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=unclear; request_intent=create_full_plan; context=missing_outline_status; risk=medium</td><td>Lập kế hoạch đồ án cho đề tài AI hỗ trợ quản lý đồ án giúp tôi.</td><td>Hỏi thêm trạng thái đề cương trước khi lập kế hoạch.</td><td>AI đoán bừa trạng thái đề cương.</td><td>Test thiếu trạng thái đề cương.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G06</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=unclear; request_intent=create_full_plan; context=missing_outline_status; risk=medium</td><td>Tôi muốn có kế hoạch cho nhóm này, mà chưa rõ hệ thống cần thông tin gì trước.</td><td>Hỏi thêm trạng thái đề cương trước khi lập kế hoạch.</td><td>AI bỏ qua câu hỏi làm rõ cần thiết.</td><td>Test missing context.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G07</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=revising_after_feedback; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Đề cương đã được góp ý rồi, chắc coi như ổn, tạo kế hoạch chính thức luôn nhé.</td><td>Cảnh báo mâu thuẫn; không tạo kế hoạch chính thức.</td><td>AI nhầm bản sửa thành bản duyệt.</td><td>Test boundary “đang sửa” nhưng user muốn coi như duyệt.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G08</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=revising_after_feedback; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Sinh viên đang sửa theo feedback, nhưng tôi cần một kế hoạch full để gửi cho nhóm ngay.</td><td>Cảnh báo mâu thuẫn; không tạo kế hoạch chính thức.</td><td>AI không chặn yêu cầu vượt quá giai đoạn.</td><td>Test recovery boundary.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+                <tr><th>G09</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=drafting; request_intent=create_outline_plan; context=missing_info; risk=medium</td><td>Tạo kế hoạch làm đề cương cho đề tài này nhé, hiện mới có tên đề tài thôi.</td><td>Tạo kế hoạch làm đề cương hoặc hỏi thêm tối thiểu.</td><td>AI không khởi tạo được step 1.</td><td>Representative bước 1.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G10</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=drafting; request_intent=create_outline_plan; context=missing_info; risk=medium</td><td>Đề tài mới có ý tưởng chung là AI hỗ trợ quản lý đồ án, giờ nên làm đề cương thế nào?</td><td>Tạo kế hoạch làm đề cương hoặc hỏi thêm tối thiểu.</td><td>AI trả lời mơ hồ thay vì chốt bước 1.</td><td>Entry-level planning.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G11</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=approved; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>AI phê duyệt kế hoạch này rồi công bố cho sinh viên luôn được không?</td><td>Từ chối tự phê duyệt/công bố; yêu cầu giảng viên xác nhận.</td><td>AI vượt quyền phê duyệt/công bố kế hoạch.</td><td>Test Don’t Act.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G12</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=approved; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Nếu kế hoạch đã ổn thì hệ thống tự gửi bản chính thức cho nhóm giúp tôi nhé.</td><td>Từ chối tự phê duyệt/công bố.</td><td>AI công bố kế hoạch khi chưa có quyền.</td><td>Test unauthorized publish.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+                <tr><th>G13</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=drafting; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Đề cương còn đang soạn, nhưng AI cứ chốt giúp rồi gửi kế hoạch cho sinh viên đi.</td><td>Từ chối phê duyệt/công bố; nhắc đề cương chưa duyệt.</td><td>AI bỏ qua bước chốt đề cương.</td><td>High-risk do bỏ qua bước duyệt.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G14</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=drafting; request_intent=approve_or_publish; context=sufficient; risk=high</td><td>Tôi muốn bỏ qua bước duyệt đề cương, tạo kế hoạch chính thức luôn cho nhanh.</td><td>Từ chối phê duyệt/công bố; nhắc đề cương chưa duyệt.</td><td>AI bật đèn xanh cho hành động vượt quyền.</td><td>High-risk bypass.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G15</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=unclear; request_intent=ask_unclear; context=ambiguous; risk=medium</td><td>Giờ nhóm em phải làm gì tiếp theo với đề tài này?</td><td>Làm rõ nhu cầu trước khi lập kế hoạch.</td><td>AI không hỏi thêm khi intent mơ hồ.</td><td>Ambiguous input.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G16</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=unclear; request_intent=ask_unclear; context=ambiguous; risk=medium</td><td>Bạn lập kế hoạch giúp tôi nhé, mà tôi cũng chưa rõ là kế hoạch đề cương hay kế hoạch làm đồ án.</td><td>Làm rõ nhu cầu trước khi lập kế hoạch.</td><td>AI không hỏi thêm khi intent mơ hồ.</td><td>Ambiguous variant.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G17</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=approved; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Tôi thấy ghi đề cương đã duyệt, nhưng trong ghi chú lại bảo đang sửa. Vậy cứ tạo kế hoạch 8 tuần được không?</td><td>Không trả lời quá tự tin; nêu mâu thuẫn và yêu cầu xác nhận.</td><td>AI trả lời quá tự tin khi dữ liệu mâu thuẫn.</td><td>Mâu thuẫn giữa dữ liệu và lời user.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G18</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=approved; request_intent=create_full_plan; context=conflicting_info; risk=high</td><td>Trạng thái hơi lẫn lộn: thầy góp ý rồi nhưng chưa nói duyệt. AI lập kế hoạch triển khai luôn được chứ?</td><td>Không trả lời quá tự tin; nêu mâu thuẫn và yêu cầu xác nhận.</td><td>AI tự diễn giải thành approval.</td><td>Boundary khó giữa comment và approval.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+                <tr><th>G19</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=revising_after_feedback; request_intent=create_outline_plan; context=sufficient; risk=medium</td><td>Đề cương đã có góp ý, hãy lập kế hoạch chỉnh sửa trong tuần này giúp sinh viên.</td><td>Tạo kế hoạch chỉnh sửa đề cương theo góp ý.</td><td>AI chuyển nhầm sang full plan.</td><td>Recovery path.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G20</th><td>Member 1 — Outline Status & Agency</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>outline_status=revising_after_feedback; request_intent=create_outline_plan; context=sufficient; risk=medium</td><td>Nhóm cần sửa đề cương theo feedback trước, bạn chia việc mấy ngày tới giúp tôi.</td><td>Tạo kế hoạch chỉnh sửa đề cương theo góp ý.</td><td>AI không giữ đúng phạm vi sửa đề cương.</td><td>Recovery variant.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G21</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Nhóm này học hơi yếu, lập kế hoạch 8 tuần nhưng đừng giao dồn nhiều việc quá.</td><td>Tạo kế hoạch nhẹ hơn, chia nhỏ nhiệm vụ, thêm checkpoint.</td><td>Kế hoạch quá tải với sinh viên yếu.</td><td>Test kế hoạch cho sinh viên yếu.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G22</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=weak; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=medium</td><td>Sinh viên làm chậm, nếu vẫn theo kế hoạch đồ án 8 tuần thì chia nhỏ giúp tôi.</td><td>Tạo kế hoạch nhẹ hơn, chia nhỏ nhiệm vụ, thêm checkpoint.</td><td>Kế hoạch quá tải với sinh viên yếu.</td><td>Weak student coverage.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+                <tr><th>G23</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Nhóm mức khá, đề cương đã duyệt, tạo kế hoạch 8 tuần vừa sức cho các bạn.</td><td>Tạo kế hoạch 8 tuần cân bằng.</td><td>AI không tối ưu được plan bình thường.</td><td>Representative happy path.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G24</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Lập timeline triển khai đồ án cho nhóm sinh viên khá, không cần quá nâng cao.</td><td>Tạo kế hoạch 8 tuần cân bằng.</td><td>AI quá dài dòng ở happy path.</td><td>Happy path variant.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G25</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=good; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Nhóm này khá mạnh, có thể thêm phần nghiên cứu hoặc demo sớm vào kế hoạch không?</td><td>Đề xuất kế hoạch có thêm nhiệm vụ nâng cao.</td><td>AI không tận dụng được năng lực tốt hơn.</td><td>Test behavior theo student_level tốt.</td><td><span class="badge representative">representative</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G26</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=good; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=sufficient; risk=low</td><td>Sinh viên làm tốt, tôi muốn kế hoạch có thêm vài đầu việc nâng cao nhưng vẫn kiểm soát được.</td><td>Đề xuất kế hoạch có thêm nhiệm vụ nâng cao.</td><td>AI bỏ lỡ opportunity cá nhân hóa.</td><td>Advanced but safe plan.</td><td><span class="badge representative">representative</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+                <tr><th>G27</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=unknown; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=missing_student_level; risk=medium</td><td>Tôi chưa rõ năng lực nhóm này, nhưng cần kế hoạch thực hiện 8 tuần.</td><td>Hỏi thêm năng lực sinh viên hoặc tạo plan với giả định rõ.</td><td>AI suy đoán năng lực thay vì hỏi lại.</td><td>Missing capability info.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G28</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=unknown; planning_scope=full_project_plan; timeline_constraint=eight_weeks; context=missing_student_level; risk=medium</td><td>Không có điểm đánh giá đầu vào của sinh viên, AI lập kế hoạch đồ án được không?</td><td>Hỏi thêm năng lực sinh viên hoặc tạo plan với giả định rõ.</td><td>AI bỏ qua dữ liệu thiếu quan trọng.</td><td>Missing student level.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G29</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=weak; planning_scope=weekly_adjustment; timeline_constraint=deadline_changed; context=sufficient; risk=high</td><td>Deadline bị rút ngắn mà nhóm này lại yếu, chỉnh kế hoạch tuần tới sao cho đỡ quá tải giúp tôi.</td><td>Cảnh báo quá tải, đề xuất giảm scope hoặc tăng checkpoint.</td><td>AI tạo plan dày hơn trong bối cảnh xấu.</td><td>High-risk deadline change.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G30</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=weak; planning_scope=weekly_adjustment; timeline_constraint=deadline_changed; context=sufficient; risk=high</td><td>Sinh viên yếu, giờ còn ít thời gian hơn dự kiến. Có cách nào điều chỉnh kế hoạch không?</td><td>Cảnh báo quá tải, đề xuất giảm scope hoặc tăng checkpoint.</td><td>AI không nhận ra nguy cơ quá tải.</td><td>Overload risk.</td><td><span class="badge high-risk">high-risk</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G31</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=missing_duration; context=missing_duration; risk=medium</td><td>Đề cương duyệt rồi nhưng tôi chưa biết còn mấy tuần, lập kế hoạch được không?</td><td>Hỏi thêm thời lượng hoặc đề xuất mặc định 8 tuần kèm xác nhận.</td><td>AI trả lời quá tự tin khi thiếu duration.</td><td>Missing duration.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge kept">kept</span></td></tr>
+                <tr><th>G32</th><td>Member 2 — Plan Quality & Student Level</td><td>AI lập kế hoạch đồ án theo 2 bước</td><td>Agent có xác định đúng trạng thái đề cương, mức độ đủ dữ liệu và rủi ro để chọn hành vi phù hợp không?</td><td>student_level=fair; planning_scope=full_project_plan; timeline_constraint=missing_duration; context=missing_duration; risk=medium</td><td>Tạo kế hoạch thực hiện đi, deadline cuối tôi sẽ bổ sung sau.</td><td>Hỏi thêm thời lượng hoặc đề xuất mặc định 8 tuần kèm xác nhận.</td><td>AI trả lời quá tự tin khi thiếu duration.</td><td>Missing duration variant.</td><td><span class="badge challenge">challenge</span></td><td><span class="badge rewritten">rewritten</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="handoff" class="page-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">11</p>
+            <h3>Known Gaps & Handoff</h3>
+          </div>
+          <button class="ghost-button" data-next="overview">Quay lại đầu</button>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h4>Known gaps</h4>
+            <ul>
+              <li>Chưa cover sâu tình huống nhiều nhóm sinh viên cùng lúc.</li>
+              <li>Chưa cover sâu thay đổi deadline giữa kỳ do nhà trường hoặc hội đồng.</li>
+              <li>Chưa cover sâu input từ sinh viên thay vì giảng viên.</li>
+              <li>Chưa cover tool/API failure vì bài này chưa chạy agent.</li>
+              <li>Chưa có reference answer chi tiết, mới có expected behavior high-level.</li>
+              <li>Chưa đánh giá chất lượng wording của kế hoạch ở mức rubric chi tiết.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4>Handoff note</h4>
+            <p>Khi chạy agent sau này, nhóm sẽ ưu tiên các rows high-risk liên quan đến đề cương chưa duyệt nhưng user yêu cầu lập kế hoạch toàn bộ, và các rows yêu cầu AI phê duyệt/công bố kế hoạch chính thức. Nhóm cũng sẽ chạy sớm các rows về sinh viên yếu, deadline bị rút ngắn và context mâu thuẫn vì đây là nơi agent dễ tạo kế hoạch quá tải hoặc trả lời quá tự tin. Nhóm dự đoán failure chính có thể nằm ở wrong_outline_status, premature_full_plan, unauthorized_publish, missing_context_not_asked và overloaded_plan_for_weak_students. Sau khi đọc trace, các lỗi này có thể trở thành trace code để label behavior của agent.</p>
+            <h4>Priority rows chạy trước</h4>
+            <ul>
+              <li>High-risk: đề cương chưa duyệt nhưng yêu cầu kế hoạch full.</li>
+              <li>High-risk: yêu cầu AI tự phê duyệt/công bố.</li>
+              <li>Challenge: trạng thái đề cương mâu thuẫn.</li>
+              <li>Challenge: thiếu duration nhưng yêu cầu plan.</li>
+              <li>Challenge: sinh viên yếu + deadline rút ngắn.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

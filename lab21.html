@@ -11,16 +11,17 @@
     <aside class="sidebar">
       <div class="brand">
         <p class="eyebrow">Day 21</p>
-        <h1>Test Inputs<br>for AI Evals</h1>
+        <h1>Test Inputs for AI Evals</h1>
         <p class="brand-note">Thiết kế Scenario Dataset cho AI lập kế hoạch đồ án theo 2 bước.</p>
       </div>
 
       <div class="lab-switcher" aria-label="Điều hướng giữa các trang">
         <a href="index.html">← Trang đầu</a>
+        <a href="lab18.html">Mở Lab 18 →</a>
         <a href="lab20.html">Mở Lab 20 →</a>
       </div>
 
-      <nav class="menu" aria-label="Nội dung Lab 21">
+      <nav class="menu" aria-label="Nội dung Lab 21" style="margin-top: 16px;">
         <button class="nav-link active" data-target="overview">00 — Lab Overview</button>
         <button class="nav-link" data-target="unit-of-work">01 — Use Case & Unit of AI Work</button>
         <button class="nav-link" data-target="quality-question">02 — Quality Question</button>
@@ -154,52 +155,50 @@
           <button class="ghost-button" data-next="combinations">Tiếp</button>
         </div>
 
-        <div class="grid-2">
-          <article class="card">
-            <h4>Member 1 — Outline Status & Agency</h4>
-            <p class="section-note">Focus: trạng thái đề cương và quyền hành động của AI.</p>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Dimension</th>
-                    <th>Values</th>
-                    <th>Vì sao làm agent phải đổi behavior?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><th>outline_status</th><td>drafting, revising_after_feedback, approved, unclear</td><td>Trạng thái đề cương quyết định AI chỉ được lập kế hoạch đề cương hay được lập kế hoạch thực hiện.</td></tr>
-                  <tr><th>request_intent</th><td>create_outline_plan, create_full_plan, approve_or_publish, ask_unclear</td><td>Intent khác nhau khiến AI phải tạo plan, hỏi thêm, hoặc từ chối hành động vượt quyền.</td></tr>
-                  <tr><th>context_completeness</th><td>sufficient, missing_outline_status, conflicting_info, ambiguous</td><td>Thiếu hoặc mâu thuẫn thông tin thì AI phải hỏi thêm hoặc cảnh báo.</td></tr>
-                  <tr><th>risk_level</th><td>low, medium, high</td><td>Rủi ro càng cao thì AI càng phải Ask hoặc Don’t Act.</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
+        <article class="card">
+          <h4>Member 1 — Outline Status & Agency</h4>
+          <p class="section-note">Focus: trạng thái đề cương và quyền hành động của AI.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Dimension</th>
+                  <th>Values</th>
+                  <th>Vì sao làm agent phải đổi behavior?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>outline_status</th><td>drafting, revising_after_feedback, approved, unclear</td><td>Trạng thái đề cương quyết định AI chỉ được lập kế hoạch đề cương hay được lập kế hoạch thực hiện.</td></tr>
+                <tr><th>request_intent</th><td>create_outline_plan, create_full_plan, approve_or_publish, ask_unclear</td><td>Intent khác nhau khiến AI phải tạo plan, hỏi thêm, hoặc từ chối hành động vượt quyền.</td></tr>
+                <tr><th>context_completeness</th><td>sufficient, missing_outline_status, conflicting_info, ambiguous</td><td>Thiếu hoặc mâu thuẫn thông tin thì AI phải hỏi thêm hoặc cảnh báo.</td></tr>
+                <tr><th>risk_level</th><td>low, medium, high</td><td>Rủi ro càng cao thì AI càng phải Ask hoặc Don’t Act.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
 
-          <article class="card">
-            <h4>Member 2 — Plan Quality & Student Level</h4>
-            <p class="section-note">Focus: chất lượng kế hoạch, năng lực sinh viên và ràng buộc thời gian.</p>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Dimension</th>
-                    <th>Values</th>
-                    <th>Vì sao làm agent phải đổi behavior?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><th>student_level</th><td>weak, fair, good, unknown</td><td>Năng lực sinh viên ảnh hưởng độ dày kế hoạch, số checkpoint và mức độ chi tiết.</td></tr>
-                  <tr><th>planning_scope</th><td>outline_plan, full_project_plan, weekly_adjustment, recovery_adjustment</td><td>Scope khác nhau làm output khác nhau: kế hoạch đề cương, kế hoạch toàn bộ, điều chỉnh tuần hoặc recovery.</td></tr>
-                  <tr><th>timeline_constraint</th><td>one_week, eight_weeks, missing_duration, deadline_changed</td><td>Thời lượng và deadline quyết định cách chia kế hoạch.</td></tr>
-                  <tr><th>context_completeness</th><td>sufficient, missing_student_level, missing_duration, conflicting_info</td><td>Thiếu thông tin quan trọng thì AI phải hỏi thêm hoặc đưa giả định rõ.</td></tr>
-                  <tr><th>risk_level</th><td>low, medium, high</td><td>Rủi ro cao như kế hoạch quá tải hoặc deadline gấp cần cảnh báo và xin xác nhận.</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
-        </div>
+        <article class="card" style="margin-top: 16px;">
+          <h4>Member 2 — Plan Quality & Student Level</h4>
+          <p class="section-note">Focus: chất lượng kế hoạch, năng lực sinh viên và ràng buộc thời gian.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Dimension</th>
+                  <th>Values</th>
+                  <th>Vì sao làm agent phải đổi behavior?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th>student_level</th><td>weak, fair, good, unknown</td><td>Năng lực sinh viên ảnh hưởng độ dày kế hoạch, số checkpoint và mức độ chi tiết.</td></tr>
+                <tr><th>planning_scope</th><td>outline_plan, full_project_plan, weekly_adjustment, recovery_adjustment</td><td>Scope khác nhau làm output khác nhau: kế hoạch đề cương, kế hoạch toàn bộ, điều chỉnh tuần hoặc recovery.</td></tr>
+                <tr><th>timeline_constraint</th><td>one_week, eight_weeks, missing_duration, deadline_changed</td><td>Thời lượng và deadline quyết định cách chia kế hoạch.</td></tr>
+                <tr><th>context_completeness</th><td>sufficient, missing_student_level, missing_duration, conflicting_info</td><td>Thiếu thông tin quan trọng thì AI phải hỏi thêm hoặc đưa giả định rõ.</td></tr>
+                <tr><th>risk_level</th><td>low, medium, high</td><td>Rủi ro cao như kế hoạch quá tải hoặc deadline gấp cần cảnh báo và xin xác nhận.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
 
         <div class="card" style="margin-top: 16px;">
           <h4>Dimension chuẩn hóa của nhóm</h4>
